@@ -268,7 +268,7 @@ class ChartingState extends MusicBeatState
 		else
 		{
 			_song = {
-				song: '',
+				song: 'Test',
 				notes: [],
 				events: [],
 				bpm: 150.0,
@@ -276,7 +276,7 @@ class ChartingState extends MusicBeatState
 				arrowSkin: '',
 				splashSkin: 'noteSplashes',//idk it would crash if i didn't
 				player1: 'bf',
-				player2: 'dad',
+				player2: 'gf',
 				gfVersion: 'gf',
 				speed: 1,
 				stage: 'stage',

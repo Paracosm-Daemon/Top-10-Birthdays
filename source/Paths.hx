@@ -179,8 +179,13 @@ class Paths
 		if (Assets.exists('songs:' + getPath('songs/$path.$SOUND_EXT', SOUND), SOUND)) return returnSound('songs', path);
 		return null;
 	}
+	inline static public function inst(song:String):Any
+	{
+		var path:String = '${formatToSongPath(song)}/Inst';
 
-	inline static public function inst(song:String):Any { return returnSound('songs', '${formatToSongPath(song)}/Inst'); }
+		if (Assets.exists('songs:' + getPath('songs/$path.$SOUND_EXT', SOUND), SOUND)) return returnSound('songs', path);
+		return null;
+	}
 
 	inline static public function image(key:String, ?library:String):FlxGraphic { return returnGraphic(getPath('images/$key.png', IMAGE, library)); }
 	static public function getTextFromFile(key:String):String
