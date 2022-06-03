@@ -114,7 +114,7 @@ class MainMenuState extends MusicBeatState
 		}
 
 		FlxG.camera.follow(camFollowPos, null, 1);
-		var versionShit:FlxText = new FlxText(0, 0, FlxG.width, 'Psych Engine v$psychEngineVersion)\nHAPPY BIRTHDAY TOP 10 AWESOME!', 12);
+		var versionShit:FlxText = new FlxText(0, 0, FlxG.width, 'Psych Engine v$psychEngineVersion\nHAPPY BIRTHDAY TOP 10 AWESOME!', 12);
 		versionShit.scrollFactor.set();
 
 		versionShit.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, LEFT, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);

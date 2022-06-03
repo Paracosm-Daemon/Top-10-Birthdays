@@ -67,6 +67,8 @@ class TitleState extends MusicBeatState
 		Paths.clearStoredMemory();
 		Paths.clearUnusedMemory();
 
+		persistentUpdate = persistentDraw = true;
+
 		var path = Paths.getPreloadPath("images/titleJSON.json");
 		titleJSON = Json.parse(Assets.getText(path));
 
@@ -97,9 +99,6 @@ class TitleState extends MusicBeatState
 
 		FlxG.save.bind('top10', 'top10birthdays');
 		ClientPrefs.loadPrefs();
-
-		var data:Dynamic = FlxG.save.data;
-		if (data != null && !initialized && data.fullscreen) FlxG.fullscreen = data.fullscreen;
 
 		FlxG.mouse.visible = false;
 		if (FlxG.save.data.flashing == null && !FlashingState.leftState)
@@ -350,13 +349,13 @@ class TitleState extends MusicBeatState
 				{
 					case 0:
 						createCoolText(['Pandemonium', 'the j', 'and CRASH'], -40);
-					case 2:
+					case 3:
 						addMoreText('present', -40);
 
-					case 3:
+					case 4:
 						deleteCoolText();
 
-					case 4:
+					case 5:
 						createCoolText(['A mod for'], -40);
 					case 7:
 					{
