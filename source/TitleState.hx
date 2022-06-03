@@ -47,13 +47,11 @@ class TitleState extends MusicBeatState
 	var skippedIntro:Bool = false;
 
 	var dumbassLogo:FlxSprite;
-	var typeTween:FlxTween;
 
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
 	var textGroup:FlxGroup;
 
-	var curWacky:Array<String> = [];
 	var logoScale:Float = .8;
 
 	var camTransition:FlxCamera;
@@ -95,7 +93,6 @@ class TitleState extends MusicBeatState
 		FlxG.keys.preventDefaultKeys = [ TAB ];
 		PlayerSettings.init();
 
-		curWacky = rollWacky();
 		super.create();
 
 		FlxG.save.bind('top10', 'top10birthdays');
@@ -137,14 +134,6 @@ class TitleState extends MusicBeatState
 
 	function startIntro()
 	{
-		if (!initialized)
-		{
-			playTitleMusic(0);
-
-			FlxG.sound.music.fadeIn(4, 0, .7);
-			FlxG.sound.music.play(true);
-		}
-
 		persistentUpdate = true;
 		var bg:FlxSprite = new FlxSprite();
 
@@ -211,22 +200,20 @@ class TitleState extends MusicBeatState
 
 		switch (initialized)
 		{
-			default: initialized = true;
 			case true: skipIntro();
+			default:
+			{
+				initialized = true;
+				playTitleMusic(0);
+
+				FlxG.sound.music.fadeIn(4, 0, .7);
+				FlxG.sound.music.play(true);
+
+				Conductor.songPosition = 0;
+				beatHit();
+			}
 		}
 		canYouFuckingWait = false;
-	}
-
-	function getIntroTextShit():Array<Array<String>>
-	{
-		var fullText:String = Assets.getText(Paths.txt('introText'));
-
-		var firstArray:Array<String> = fullText.split('\n');
-		var swagGoodArray:Array<Array<String>> = [];
-
-		for (i in firstArray)
-			swagGoodArray.push(i.split('--'));
-		return swagGoodArray;
 	}
 
 	override function update(elapsed:Float)
@@ -328,11 +315,6 @@ class TitleState extends MusicBeatState
 		return skippedIntro && ClientPrefs.camZooms;
 	}
 
-	function rollWacky(?comparing:Array<String> = null):Array<String>
-	{
-		return FlxG.random.getObject(getIntroTextShit());
-	}
-
 	function deleteCoolText()
 	{
 		while (textGroup.members.length > 0)
@@ -363,6 +345,7 @@ class TitleState extends MusicBeatState
 			// sickBeats++;
 			for (i in sickBeats...curBeat)
 			{
+				trace(i + 1);
 				switch (i + 1)
 				{
 					case 0:
@@ -370,18 +353,18 @@ class TitleState extends MusicBeatState
 					case 2:
 						addMoreText('present', -40);
 
-					case 8:
+					case 3:
 						deleteCoolText();
 
-					case 12:
+					case 4:
 						createCoolText(['A mod for'], -40);
-					case 14:
+					case 7:
 					{
 						if (dumbassLogo != null) dumbassLogo.visible = true;
 						addMoreText('Top 10 Awesome', -40);
 					}
 
-					case 16:
+					case 8:
 					{
 						if (dumbassLogo != null)
 						{
@@ -396,22 +379,22 @@ class TitleState extends MusicBeatState
 						deleteCoolText();
 					}
 
-					case 18:
+					case 9:
 						createCoolText(['Happy birthday']);
-					case 20:
+					case 11:
 						addMoreText('Top 10 Awesome!');
 
-					case 24:
+					case 12:
 						deleteCoolText();
 
-					case 28:
+					case 13:
 						createCoolText(['Top']);
-					case 30:
+					case 14:
 						addMoreText('10');
-					case 32:
+					case 15:
 						addMoreText('Birthdays');
 
-					case 34:
+					case 16:
 						skipIntro();
 				}
 			}
