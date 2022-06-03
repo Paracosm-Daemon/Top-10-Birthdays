@@ -30,7 +30,7 @@ class PauseSubState extends MusicBeatSubstate
 	var curTime:Float = Math.max(0, Conductor.songPosition);
 	//var botplayText:FlxText;
 
-	public static var songName:String = null;
+	public static var songName:String = 'breakfast';
 	public function new(x:Float, y:Float)
 	{
 		super();
@@ -52,7 +52,7 @@ class PauseSubState extends MusicBeatSubstate
 		menuItems = menuItemsOG;
 		pauseMusic = new FlxSound();
 
-		if (songName != null) pauseMusic.loadEmbedded(Paths.music(songName), true, true);
+		pauseMusic.loadEmbedded(Paths.music(songName), true, true);
 
 		pauseMusic.volume = 0;
 		pauseMusic.play(true);
