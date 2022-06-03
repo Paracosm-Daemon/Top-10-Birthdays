@@ -1,10 +1,7 @@
 package;
 
 import Conductor.BPMChangeEvent;
-import flixel.FlxG;
 import flixel.FlxSubState;
-import flixel.FlxBasic;
-import flixel.FlxSprite;
 
 class MusicBeatSubstate extends FlxSubState
 {
@@ -13,11 +10,9 @@ class MusicBeatSubstate extends FlxSubState
 		super();
 	}
 
-	private var lastBeat:Float = 0;
-	private var lastStep:Float = 0;
-
 	private var curStep:Int = 0;
 	private var curBeat:Int = 0;
+
 	private var controls(get, never):Controls;
 
 	inline function get_controls():Controls
@@ -25,7 +20,7 @@ class MusicBeatSubstate extends FlxSubState
 
 	override function update(elapsed:Float)
 	{
-		//everyStep();
+		// everyStep();
 		var oldStep:Int = curStep;
 
 		updateCurStep();
@@ -33,7 +28,6 @@ class MusicBeatSubstate extends FlxSubState
 
 		if (oldStep != curStep && curStep > 0)
 			stepHit();
-
 
 		super.update(elapsed);
 	}
@@ -62,6 +56,6 @@ class MusicBeatSubstate extends FlxSubState
 
 	public function beatHit():Void
 	{
-		//do literally nothing dumbass
+		// do literally nothing dumbass
 	}
 }

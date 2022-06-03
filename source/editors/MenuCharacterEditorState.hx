@@ -66,7 +66,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		add(grpWeekCharacters);
 
 		txtOffsets = new FlxText(20, 10, 0, "[0, 0]", 32);
-		txtOffsets.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER);
+		txtOffsets.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER);
 		txtOffsets.alpha = 0.7;
 		add(txtOffsets);
 
@@ -116,7 +116,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		loadButton.screenCenter(X);
 		loadButton.x -= 60;
 		add(loadButton);
-	
+
 		var saveButton:FlxButton = new FlxButton(0, 480, "Save Character", function() {
 			saveCharacter();
 		});
@@ -169,7 +169,7 @@ class MenuCharacterEditorState extends MusicBeatState
 	function addCharacterUI() {
 		var tab_group = new FlxUI(null, UI_mainbox);
 		tab_group.name = "Character";
-		
+
 		imageInputText = new FlxUIInputText(10, 20, 80, characterFile.image, 8);
 		blockPressWhileTypingOn.push(imageInputText);
 		idleInputText = new FlxUIInputText(10, imageInputText.y + 35, 100, characterFile.idle_anim, 8);
@@ -187,7 +187,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		var reloadImageButton:FlxButton = new FlxButton(140, confirmInputText.y + 30, "Reload Char", function() {
 			reloadSelectedCharacter();
 		});
-		
+
 		scaleStepper = new FlxUINumericStepper(140, imageInputText.y, 0.05, 1, 0.1, 30, 2);
 
 		confirmDescText = new FlxText(10, confirmInputText.y - 18, 0, 'Start Press animation on the .XML:');
@@ -230,7 +230,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		}
 		reloadSelectedCharacter();
 	}
-	
+
 	function reloadSelectedCharacter() {
 		var char:MenuCharacter = grpWeekCharacters.members[curTypeSelected];
 
@@ -247,7 +247,7 @@ class MenuCharacterEditorState extends MusicBeatState
 		confirmDescText.visible = (curTypeSelected == 1);
 		confirmInputText.visible = (curTypeSelected == 1);
 		updateOffset();
-		
+
 		#if desktop
 		// Updating Discord Rich Presence
 		DiscordClient.changePresence("Menu Character Editor", "Editting: " + characterFile.image);

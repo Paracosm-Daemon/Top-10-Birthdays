@@ -1,20 +1,24 @@
 package;
 
-import Sys.sleep;
-import discord_rpc.DiscordRpc;
-
-#if LUA_ALLOWED
-import llua.Lua;
-import llua.State;
-#end
-
 using StringTools;
+
+#if (desktop && !neko && !debug)
+import Sys.sleep;
+import sys.thread.Thread;
+import discord_rpc.DiscordRpc;
+#end
 
 class DiscordClient
 {
+	private static var largeText:String = "Happy Birthday";
 	public static var isInitialized:Bool = false;
+	#if (desktop && !neko && !debug)
+	private static var curPresence:DiscordPresenceOptions;
+	#end
+
 	public function new()
 	{
+		#if (desktop && !neko && !debug)
 		trace("Discord Client starting...");
 		DiscordRpc.start({
 			clientID: "863222024192262205",
@@ -23,30 +27,38 @@ class DiscordClient
 			onDisconnected: onDisconnected
 		});
 		trace("Discord Client started.");
-
 		while (true)
 		{
+			if (curPresence != null)
+			{
+				DiscordRpc.presence(curPresence);
+				curPresence = null;
+			}
 			DiscordRpc.process();
-			sleep(2);
-			//trace("Discord Client Update");
+			sleep(1);
+			// trace("Discord Client Update");
 		}
-
 		DiscordRpc.shutdown();
+		#end
 	}
-	
+
 	public static function shutdown()
 	{
+		#if (desktop && !neko && !debug)
 		DiscordRpc.shutdown();
+		#end
 	}
-	
+
 	static function onReady()
 	{
+		#if (desktop && !neko && !debug)
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
 			largeImageKey: 'icon',
-			largeImageText: "Psych Engine"
+			largeImageText: largeText
 		});
+		#end
 	}
 
 	static function onError(_code:Int, _message:String)
@@ -61,42 +73,33 @@ class DiscordClient
 
 	public static function initialize()
 	{
-		var DiscordDaemon = sys.thread.Thread.create(() ->
-		{
-			new DiscordClient();
-		});
-		trace("Discord Client initialized");
+		#if (desktop && !neko && !debug)
+		var daemon:Thread = sys.thread.Thread.create(() -> { new DiscordClient(); });
 		isInitialized = true;
+
+		trace("Discord Client initialized");
+		trace(daemon);
+		#end
 	}
 
-	public static function changePresence(details:String, state:Null<String>, ?smallImageKey : String, ?hasStartTimestamp : Bool, ?endTimestamp: Float)
+	public static function changePresence(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float)
 	{
-		var startTimestamp:Float = if(hasStartTimestamp) Date.now().getTime() else 0;
-
-		if (endTimestamp > 0)
-		{
+		#if (desktop && !neko && !debug)
+		var startTimestamp:Float = hasStartTimestamp ? Date.now().getTime() : 0;
+		if (endTimestamp > 0 && hasStartTimestamp)
 			endTimestamp = startTimestamp + endTimestamp;
-		}
 
-		DiscordRpc.presence({
+		curPresence = { // DiscordRpc.presence({
 			details: details,
 			state: state,
 			largeImageKey: 'icon',
-			largeImageText: "Engine Version: " + MainMenuState.psychEngineVersion,
-			smallImageKey : smallImageKey,
+			largeImageText: largeText,
+			smallImageKey: smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
-			startTimestamp : Std.int(startTimestamp / 1000),
-            endTimestamp : Std.int(endTimestamp / 1000)
-		});
-
-		//trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
+			startTimestamp: hasStartTimestamp ? Std.int(startTimestamp / 1000) : null,
+			endTimestamp: hasStartTimestamp ? Std.int(endTimestamp / 1000) : null
+		}; // );
+		#end
+		// trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
-
-	#if LUA_ALLOWED
-	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changePresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-		});
-	}
-	#end
 }

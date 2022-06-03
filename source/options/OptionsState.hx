@@ -36,8 +36,6 @@ class OptionsState extends MusicBeatState
 
 	function openSelectedSubstate(label:String) {
 		switch(label) {
-			case 'Note Colors':
-				openSubState(new options.NotesSubState());
 			case 'Controls':
 				openSubState(new options.ControlsSubState());
 			case 'Graphics':
@@ -113,7 +111,7 @@ class OptionsState extends MusicBeatState
 			openSelectedSubstate(options[curSelected]);
 		}
 	}
-	
+
 	function changeSelection(change:Int = 0) {
 		curSelected += change;
 		if (curSelected < 0)

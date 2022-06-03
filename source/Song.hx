@@ -92,17 +92,11 @@ class Song
 	public static function loadFromJson(jsonInput:String, ?folder:String):SwagSong
 	{
 		var rawJson = null;
-		
+
 		var formattedFolder:String = Paths.formatToSongPath(folder);
 		var formattedSong:String = Paths.formatToSongPath(jsonInput);
-		#if MODS_ALLOWED
-		var moddyFile:String = Paths.modsJson(formattedFolder + '/' + formattedSong);
-		if(FileSystem.exists(moddyFile)) {
-			rawJson = File.getContent(moddyFile).trim();
-		}
-		#end
 
-		if(rawJson == null) {
+		if (rawJson == null) {
 			#if sys
 			rawJson = File.getContent(Paths.json(formattedFolder + '/' + formattedSong)).trim();
 			#else
@@ -121,7 +115,7 @@ class Song
 		// trace(songData);
 
 		// trace('LOADED FROM JSON: ' + songData.notes);
-		/* 
+		/*
 			for (i in 0...songData.notes.length)
 			{
 				trace('LOADED FROM JSON: ' + songData.notes[i].sectionNotes);
