@@ -39,19 +39,24 @@ class FlashingState extends MusicBeatState
 
 	override function update(elapsed:Float)
 	{
-		if(!leftState) {
+		if (!leftState)
+		{
+			var accept:Bool = controls.ACCEPT;
 			var back:Bool = controls.BACK;
-			if (controls.ACCEPT || back)
+
+			if (accept || back)
 			{
 				leftState = true;
 
 				FlxTransitionableState.skipNextTransIn = true;
 				FlxTransitionableState.skipNextTransOut = true;
 
-				ClientPrefs.flashing = back;
-				ClientPrefs.saveSettings();
+				ClientPrefs.reducedMotion = back;
+				ClientPrefs.flashing = accept;
 
+				ClientPrefs.saveSettings();
 				FlxG.sound.play(Paths.sound(back ? 'cancelMenu' : 'confirmMenu'));
+
 				switch (back)
 				{
 					case true:
@@ -65,7 +70,7 @@ class FlashingState extends MusicBeatState
 					default:
 					{
 						FlxFlicker.flicker(warnText, 1, .1, false, true, function(flk:FlxFlicker) {
-							new FlxTimer().start(0.5, function (tmr:FlxTimer) {
+							new FlxTimer().start(.5, function (tmr:FlxTimer) {
 								MusicBeatState.switchState(new TitleState());
 							});
 						});

@@ -46,7 +46,7 @@ class TitleState extends MusicBeatState
 	var canYouFuckingWait:Bool = false;
 	var skippedIntro:Bool = false;
 
-	var dumbassLogo:FlxSprite;
+	var awesomeLogo:FlxSprite;
 
 	var credGroup:FlxGroup;
 	var credTextShit:Alphabet;
@@ -171,15 +171,15 @@ class TitleState extends MusicBeatState
 		titleText.x += titleJSON.startx;
 		titleText.y += titleJSON.starty;
 
-		dumbassLogo = new FlxSprite().loadGraphic(Paths.image('gobbledegook'));
+		awesomeLogo = new FlxSprite().loadGraphic(Paths.image('top10'));
 
-		dumbassLogo.setGraphicSize(Std.int(dumbassLogo.width * 1.2));
-		dumbassLogo.updateHitbox();
+		awesomeLogo.setGraphicSize(240);
+		awesomeLogo.updateHitbox();
 
-		dumbassLogo.screenCenter(X);
-		dumbassLogo.y = FlxG.height - dumbassLogo.height - 40;
+		awesomeLogo.screenCenter(X);
+		awesomeLogo.y = FlxG.height - awesomeLogo.height - 40;
 
-		dumbassLogo.visible = false;
+		awesomeLogo.visible = false;
 
 		credGroup = new FlxGroup();
 		textGroup = new FlxGroup();
@@ -189,7 +189,7 @@ class TitleState extends MusicBeatState
 		add(credGroup);
 
 		credGroup.add(bg);
-		credGroup.add(dumbassLogo);
+		credGroup.add(awesomeLogo);
 
 		credTextShit = new Alphabet(0, 0, "", true);
 		credTextShit.screenCenter();
@@ -344,7 +344,6 @@ class TitleState extends MusicBeatState
 			// sickBeats++;
 			for (i in sickBeats...curBeat)
 			{
-				trace(i + 1);
 				switch (i + 1)
 				{
 					case 0:
@@ -359,27 +358,27 @@ class TitleState extends MusicBeatState
 						createCoolText(['A mod for'], -40);
 					case 7:
 					{
-						if (dumbassLogo != null) dumbassLogo.visible = true;
+						if (awesomeLogo != null) awesomeLogo.visible = true;
 						addMoreText('Top 10 Awesome', -40);
 					}
 
 					case 8:
 					{
-						if (dumbassLogo != null)
+						if (awesomeLogo != null)
 						{
-							dumbassLogo.visible = false;
-							dumbassLogo.kill();
+							awesomeLogo.visible = false;
+							awesomeLogo.kill();
 
-							credGroup.remove(dumbassLogo);
+							credGroup.remove(awesomeLogo);
 
-							dumbassLogo.destroy();
-							dumbassLogo = null;
+							awesomeLogo.destroy();
+							awesomeLogo = null;
 						}
 						deleteCoolText();
 					}
 
 					case 9:
-						createCoolText(['Happy birthday']);
+						createCoolText(['Happy Birthday']);
 					case 11:
 						addMoreText('Top 10 Awesome!');
 
@@ -387,11 +386,11 @@ class TitleState extends MusicBeatState
 						deleteCoolText();
 
 					case 13:
-						createCoolText(['Top']);
+						createCoolText(['Top 10 Awesome\'s']);
 					case 14:
-						addMoreText('10');
+						addMoreText('Birthday');
 					case 15:
-						addMoreText('Birthdays');
+						addMoreText('Bash');
 
 					case 16:
 						skipIntro();

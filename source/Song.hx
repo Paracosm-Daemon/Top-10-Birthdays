@@ -23,7 +23,6 @@ typedef SwagSong =
 
 	var player1:String;
 	var player2:String;
-	var gfVersion:String;
 	var stage:String;
 
 	var arrowSkin:String;
@@ -47,18 +46,11 @@ class Song
 	public var speed:Float = 1;
 	public var stage:String;
 
-	public var player1:String = 'bf';
-	public var player2:String = 'dad';
-	public var gfVersion:String = 'gf';
+	public var player1:String = 'top10';
+	public var player2:String = 'top10';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{
-		if (songJson.gfVersion == null)
-		{
-			songJson.gfVersion = songJson.player3;
-			songJson.player3 = null;
-		}
-
 		if (songJson.events == null)
 		{
 			songJson.events = [];

@@ -1,3 +1,2 @@
-bf
-gf
 top10
+eviltop10

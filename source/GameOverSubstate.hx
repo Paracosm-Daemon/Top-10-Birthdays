@@ -13,9 +13,10 @@ class GameOverSubstate extends MusicBeatSubstate
 	public var boyfriend:Character;
 
 	public static var deathSoundName:String = 'fnf_loss_sfx';
-	public static var endSoundName:String = 'diecon';
-	public static var loopSoundName:String = 'over';
-	public static var characterName:String = 'bf';
+	public static var endSoundName:String = 'gameOverEnd';
+	public static var loopSoundName:String = 'gameOver';
+
+	public static var characterName:String = 'top10';
 
 	public static var deathSoundLibrary:String = null;
 	public static var loopSoundLibrary:String = null;
@@ -42,10 +43,10 @@ class GameOverSubstate extends MusicBeatSubstate
 	public static function resetVariables()
 	{
 		deathSoundName = 'fnf_loss_sfx';
-		characterName = 'bf';
+		characterName = 'top10';
 
-		endSoundName = 'diecon';
-		loopSoundName = 'over';
+		endSoundName = 'gameOverEnd';
+		loopSoundName = 'gameOver';
 
 		deathSoundLibrary = null;
 		loopSoundLibrary = null;

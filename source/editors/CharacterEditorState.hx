@@ -340,7 +340,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 			],
 			"no_antialiasing": false,
-			"image": "characters/top10",
+			"image": "characters/top10bday",
 			"position": [
 				0,
 				0
@@ -470,7 +470,7 @@ class CharacterEditorState extends MusicBeatState
 
 		tab_group.name = "Character";
 
-		imageInputText = new FlxUIInputText(15, 30, 200, 'characters/BOYFRIEND', 8);
+		imageInputText = new FlxUIInputText(15, 30, 200, 'characters/top10bday', 8);
 
 		var reloadImage:FlxButton = new FlxButton(imageInputText.x + 210, imageInputText.y - 3, "Reload Image", function()
 		{
@@ -897,7 +897,7 @@ class CharacterEditorState extends MusicBeatState
 		}
 		else
 		{
-			char.quickAnimAdd('idle', 'BF idle dance');
+			char.quickAnimAdd('idle', 'idle');
 		}
 
 		if (lastAnim != '')

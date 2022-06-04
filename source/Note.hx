@@ -27,7 +27,14 @@ class Note extends FlxSprite
 	public var ignoreNote:Bool = false;
 	public var hitByOpponent:Bool = false;
 	public var noteWasHit:Bool = false;
+
 	public var prevNote:Note;
+	public var nextNote:Note;
+
+	public var spawned:Bool = false;
+
+	public var tail:Array<Note> = []; // for sustains
+	public var parent:Note;
 
 	public var earlyHitWindow:Float = ClientPrefs.safeFrames;
 	public var lateHitWindow:Float = ClientPrefs.safeFrames;
@@ -43,7 +50,6 @@ class Note extends FlxSprite
 
 	public var colorSwap:ColorSwap;
 	public var inEditor:Bool = false;
-	public var gfNote:Bool = false;
 
 	private var lateHitMult:Float = .5;
 	public static var widthMul:Float = .7;
@@ -133,8 +139,6 @@ class Note extends FlxSprite
 					noAnimation = true;
 					noMissAnimation = true;
 				}
-				case 'GF Sing':
-					gfNote = true;
 			}
 			noteType = value;
 		}
@@ -191,6 +195,8 @@ class Note extends FlxSprite
 		}
 
 		// trace(prevNote);
+		if (prevNote != null)
+			prevNote.nextNote = this;
 
 		if (isSustainNote && prevNote != null)
 		{

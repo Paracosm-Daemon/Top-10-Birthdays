@@ -20,7 +20,7 @@ class PauseSubState extends MusicBeatSubstate
 	var grpMenuShit:FlxTypedGroup<Alphabet>;
 
 	var menuItems:Array<String> = [];
-	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Change Difficulty', 'Exit to Menu'];
+	var menuItemsOG:Array<String> = ['Resume', 'Restart Song', 'Exit to Menu'];
 
 	var curSelected:Int = 0;
 
@@ -64,7 +64,7 @@ class PauseSubState extends MusicBeatSubstate
 		bg.scrollFactor.set();
 
 		add(bg);
-		var levelInfo:FlxText = new FlxText(0, 0, FlxG.width, '${PlayState.SONG.song}\n${CoolUtil.difficultyString()}\nFails: ${PlayState.deathCounter}', 32);
+		var levelInfo:FlxText = new FlxText(0, 0, FlxG.width, '${PlayState.SONG.song}\nFails: ${PlayState.deathCounter}', 32);
 		levelInfo.scrollFactor.set();
 
 		levelInfo.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, RIGHT);
@@ -188,7 +188,6 @@ class PauseSubState extends MusicBeatSubstate
 				case 'Toggle Botplay':
 				{
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
-					PlayState.changedDifficulty = true;
 
 					PlayState.instance.botplayTxt.visible = PlayState.instance.cpuControlled;
 					PlayState.instance.botplayTxt.alpha = 1;
@@ -205,7 +204,6 @@ class PauseSubState extends MusicBeatSubstate
 					PlayState.cancelMusicFadeTween();
 					TitleState.playTitleMusic();
 
-					PlayState.changedDifficulty = false;
 					PlayState.chartingMode = false;
 				}
 			}

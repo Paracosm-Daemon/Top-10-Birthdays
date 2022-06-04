@@ -72,9 +72,9 @@ class Character extends FlxSprite
 	public var originalFlipX:Bool = false;
 	public var healthColorArray:Array<Int> = [255, 0, 0];
 
-	public static var DEFAULT_CHARACTER:String = 'bf'; // In case a character is missing, it will use BF on its place
+	public static var DEFAULT_CHARACTER:String = 'top10';
 
-	public function new(x:Float, y:Float, ?character:String = 'bf', ?isPlayer:Bool = false)
+	public function new(x:Float, y:Float, ?character:String = 'top10', ?isPlayer:Bool = false)
 	{
 		super(x, y);
 
@@ -97,11 +97,7 @@ class Character extends FlxSprite
 					if (specialAnim)
 					{
 						var curName:String = curAnim.name.toLowerCase();
-						var stopAnimation:Bool = switch (curCharacter)
-						{
-							default: curName == 'hey' || curName == 'cheer';
-							case 'exTricky': curName == 'hank';
-						}
+						var stopAnimation:Bool = curName == 'hey' || curName == 'cheer';
 
 						if (stopAnimation)
 						{
@@ -149,10 +145,6 @@ class Character extends FlxSprite
 	}
 
 	public var danced:Bool = false;
-
-	/**
-	 * FOR GF DANCING SHIT
-	 */
 	public function dance(force:Bool = false)
 	{
 		if (!debugMode && !skipDance && !specialAnim)
@@ -185,21 +177,9 @@ class Character extends FlxSprite
 
 		if (animOffsets.exists(AnimName)) { var daOffset:Array<Dynamic> = animOffsets.get(AnimName); offset.set(daOffset[0], daOffset[1]); }
 		else { offset.set(0, 0); }
-
-		if (curCharacter.startsWith('gf'))
-		{
-			danced = switch (lowerName)
-			{
-				case 'singright': false;
-				case 'singleft': true;
-
-				case 'singup' | 'singdown': !danced;
-				default: danced;
-			};
-		}
 	}
 
-	public function setCharacter(?character:String = "bf")
+	public function setCharacter(?character:String = "top10")
 	{
 		#if (haxe >= "4.0.0")
 		animOffsets = new Map();
@@ -213,7 +193,7 @@ class Character extends FlxSprite
 		var path:String = Paths.getPreloadPath(characterPath);
 
 		if (!Assets.exists(path))
-			path = Paths.getPreloadPath('characters/$DEFAULT_CHARACTER.json'); // If a character couldn't be found, change him to BF just to prevent a crash
+			path = Paths.getPreloadPath('characters/$DEFAULT_CHARACTER.json');
 		var rawJson = Assets.getText(path);
 
 		var json:CharacterFile = cast Json.parse(rawJson);
@@ -294,7 +274,7 @@ class Character extends FlxSprite
 		}
 		else
 		{
-			quickAnimAdd('idle', 'BF idle dance');
+			quickAnimAdd('idle', 'idle');
 		}
 
 		originalFlipX = flipX;
@@ -304,30 +284,7 @@ class Character extends FlxSprite
 		recalculateDanceIdle();
 		dance();
 
-		if (isPlayer)
-		{
-			flipX = !flipX;
-
-			/*// Doesn't flip for BF, since his are already in the right place???
-				if (!curCharacter.startsWith('bf'))
-				{
-					// var animArray
-					if (animation.getByName('singLEFT') != null && animation.getByName('singRIGHT') != null)
-					{
-						var oldRight = animation.getByName('singRIGHT').frames;
-						animation.getByName('singRIGHT').frames = animation.getByName('singLEFT').frames;
-						animation.getByName('singLEFT').frames = oldRight;
-					}
-
-					// IF THEY HAVE MISS ANIMATIONS??
-					if (animation.getByName('singLEFTmiss') != null && animation.getByName('singRIGHTmiss') != null)
-					{
-						var oldMiss = animation.getByName('singRIGHTmiss').frames;
-						animation.getByName('singRIGHTmiss').frames = animation.getByName('singLEFTmiss').frames;
-						animation.getByName('singLEFTmiss').frames = oldMiss;
-					}
-			}*/
-		}
+		if (isPlayer) flipX = !flipX;
 	}
 
 	public var danceEveryNumBeats:Int = 2;

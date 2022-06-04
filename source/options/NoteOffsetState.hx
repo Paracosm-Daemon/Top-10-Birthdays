@@ -19,7 +19,6 @@ using StringTools;
 class NoteOffsetState extends MusicBeatState
 {
 	var boyfriend:Character;
-	var gf:Character;
 
 	public var camHUD:FlxCamera;
 	public var camGame:FlxCamera;
@@ -87,16 +86,11 @@ class NoteOffsetState extends MusicBeatState
 		}
 
 		// Characters
-		gf = new Character(400, 130, 'gf');
-		gf.x += gf.positionArray[0];
-		gf.y += gf.positionArray[1];
-		gf.scrollFactor.set(0.95, 0.95);
-		boyfriend = new Character(770, 100, 'bf', true);
+		boyfriend = new Character(770, 100, 'top10', true);
 		boyfriend.x += boyfriend.positionArray[0];
 		boyfriend.y += boyfriend.positionArray[1];
-		add(gf);
-		add(boyfriend);
 
+		add(boyfriend);
 		// Combo stuff
 
 		coolText = new FlxText(0, 0, 0, '', 32);
@@ -367,19 +361,10 @@ class NoteOffsetState extends MusicBeatState
 	override public function beatHit()
 	{
 		super.beatHit();
+		if (lastBeatHit == curBeat) return;
 
-		if(lastBeatHit == curBeat)
-		{
-			return;
-		}
-
-		if(curBeat % 2 == 0)
-		{
-			boyfriend.dance();
-			gf.dance();
-		}
-
-		if(curBeat % 4 == 2)
+		if (curBeat % 2 == 0) boyfriend.dance();
+		if (curBeat % 4 == 2)
 		{
 			FlxG.camera.zoom = 1.15;
 
