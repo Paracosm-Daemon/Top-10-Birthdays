@@ -273,7 +273,7 @@ class ChartingState extends MusicBeatState
 				arrowSkin: '',
 				splashSkin: 'noteSplashes',//idk it would crash if i didn't
 				player1: 'top10',
-				player2: 'eviltop10',
+				player2: 'test',
 				speed: 1,
 				stage: 'stage',
 				validScore: false
@@ -393,7 +393,6 @@ class ChartingState extends MusicBeatState
 		\nHold Control and click on an arrow to select it
 		\nZ/X - Zoom in/out
 		\n
-		\nEsc - Test your chart inside Chart Editor
 		\nEnter - Play your chart
 		\nQ/E - Decrease/Increase Note Sustain Length
 		\nSpace - Stop/Resume song";
@@ -1859,8 +1858,12 @@ class ChartingState extends MusicBeatState
 						strumLineNotes.members[noteDataToCheck].resetAnim = (note.sustainLength / 1000) + 0.15;
 					if(!playedSound[data]) {
 						if((playSoundBf.checked && note.mustPress) || (playSoundDad.checked && !note.mustPress)){
-							Hitsound.play().pan = note.noteData < 4? -0.3 : 0.3; //would be coolio
-							playedSound[data] = true;
+							var hs:FlxSound = Hitsound.play(); //would be coolio
+							if (hs != null)
+							{
+								hs.pan = .3 * (note.noteData < 4 ? -1 : 1);
+								playedSound[data] = true;
+							}
 						}
 
 						data = note.noteData;

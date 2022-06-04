@@ -76,7 +76,7 @@ class PauseSubState extends MusicBeatSubstate
 		levelInfo.x = FlxG.width - (levelInfo.width + 20);
 		levelInfo.y = -levelInfo.height;
 
-		FlxTween.tween(levelInfo, { alpha: 1, y: 0 }, .4, { ease: FlxEase.quartInOut, startDelay: .2 });
+		FlxTween.tween(levelInfo, { alpha: 1, y: 10 }, .4, { ease: FlxEase.quartInOut, startDelay: .2 });
 		var chartingText:FlxText = new FlxText(20, 15 + 101, 0, "CHARTING MODE", 32);
 
 		chartingText.scrollFactor.set();
@@ -153,17 +153,17 @@ class PauseSubState extends MusicBeatSubstate
 
 		if (accepted)
 		{
-			switch (daSelected)
+			switch (Paths.formatToSongPath(daSelected))
 			{
-				case "Resume": close();
+				case "resume": close();
 
-				case "Restart Song": restartSong();
-				case "Leave Charting Mode":
+				case "restart-song": restartSong();
+				case "leave-charting-mode":
 				{
 					restartSong();
 					PlayState.chartingMode = false;
 				}
-				case 'Skip Time':
+				case 'skip-time':
 				{
 					if (curTime < Conductor.songPosition)
 					{
@@ -180,12 +180,12 @@ class PauseSubState extends MusicBeatSubstate
 						close();
 					}
 				}
-				case "End Song":
+				case "end-song":
 				{
 					close();
 					PlayState.instance.finishSong(true);
 				}
-				case 'Toggle Botplay':
+				case 'toggle-botplay':
 				{
 					PlayState.instance.cpuControlled = !PlayState.instance.cpuControlled;
 
@@ -194,7 +194,7 @@ class PauseSubState extends MusicBeatSubstate
 
 					PlayState.instance.botplaySine = 0;
 				}
-				case "Exit to menu":
+				case "exit-to-menu":
 				{
 					PlayState.deathCounter = 0;
 					PlayState.seenCutscene = false;
@@ -217,7 +217,7 @@ class PauseSubState extends MusicBeatSubstate
 		FlxG.sound.music.volume = 0;
 		PlayState.instance.vocals.volume = 0;
 
-		if(noTrans)
+		if (noTrans)
 		{
 			FlxTransitionableState.skipNextTransOut = true;
 			FlxG.resetState();

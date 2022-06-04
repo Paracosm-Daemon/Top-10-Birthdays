@@ -28,7 +28,7 @@ class StageData
 		var curSong:String = SONG.song;
 		return (SONG.stage != null) ? SONG.stage : curSong != null ? switch (Paths.formatToSongPath(curSong))
 		{
-			case 'bash': 'birthday';
+			// case 'bash': 'birthday';
 			default: 'stage';
 		} : 'stage';
 	}

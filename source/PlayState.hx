@@ -301,7 +301,6 @@ class PlayState extends MusicBeatState
 		debugKeysChart = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_1'));
 		debugKeysCharacter = ClientPrefs.copyKey(ClientPrefs.keyBinds.get('debug_2'));
 
-		PauseSubState.songName = null; // Reset to default
 		keysArray = [
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_left')),
 			ClientPrefs.copyKey(ClientPrefs.keyBinds.get('note_down')),
@@ -533,7 +532,7 @@ class PlayState extends MusicBeatState
 
 		var showTime:Bool = ClientPrefs.timeBarType != 'Disabled';
 
-		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 0, 400, "", 32);
+		timeTxt = new FlxText(STRUM_X + (FlxG.width / 2) - 248, 19, 400, "", 32);
 		timeTxt.setFormat(Paths.font("vcr.ttf"), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 
 		timeTxt.antialiasing = ClientPrefs.globalAntialiasing;
@@ -553,7 +552,7 @@ class PlayState extends MusicBeatState
 		timeBarBG = new AttachedSprite('timeBar');
 
 		timeBarBG.x = timeTxt.x;
-		timeBarBG.y = timeTxt.y + (timeTxt.height / 4) + 4;
+		timeBarBG.y = timeTxt.y + (timeTxt.height / 4);
 
 		timeBarBG.antialiasing = ClientPrefs.globalAntialiasing;
 
@@ -743,7 +742,7 @@ class PlayState extends MusicBeatState
 		CoolUtil.precacheSong(curSong);
 		Hitsound.play(true);
 
-		if (PauseSubState.songName != null) CoolUtil.precacheMusic(PauseSubState.songName);
+		CoolUtil.precacheMusic(PauseSubState.songName);
 		// Updating Discord Rich Presence.
 		DiscordClient.changePresence(detailsText, getFormattedSong(), iconP2.getCharacter());
 
@@ -2448,9 +2447,13 @@ class PlayState extends MusicBeatState
 		for (i in seperatedScore)
 		{
 			var numScore:FlxSprite = new FlxSprite().loadGraphic(Paths.image('num${Std.int(i)}'));
-			numScore.antialiasing = ClientPrefs.globalAntialiasing;
 
+			numScore.antialiasing = ClientPrefs.globalAntialiasing;
 			numScore.cameras = [camHUD];
+
+			numScore.setGraphicSize(Std.int(numScore.width * .5));
+			numScore.updateHitbox();
+
 			numScore.screenCenter();
 
 			numScore.x = coolText.x + (43 * daLoop) - 90;
