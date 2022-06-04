@@ -3013,7 +3013,7 @@ class PlayState extends MusicBeatState
 		super.stepHit();
 
 		var songPosition:Float = Conductor.songPosition - Conductor.offset;
-		if (songPosition >= 0 && (Math.abs(FlxG.sound.music.time - songPosition) > vocalResyncTime && FlxG.sound.music.length > songPosition && FlxG.sound.music.time < FlxG.sound.music.length && FlxG.sound.music.playing) || (SONG.needsVoices && Math.abs(vocals.time - songPosition) > vocalResyncTime && vocals.length > songPosition && vocals.time < vocals.length && vocals.time < FlxG.sound.music.length && vocals.playing))
+		if (songPosition >= 0 && Conductor.songPosition <= FlxG.sound.music.length && (Math.abs(FlxG.sound.music.time - songPosition) > vocalResyncTime && FlxG.sound.music.length > songPosition && FlxG.sound.music.time < FlxG.sound.music.length && FlxG.sound.music.playing) || (SONG.needsVoices && Math.abs(vocals.time - songPosition) > vocalResyncTime && vocals.length > songPosition && vocals.time < vocals.length && vocals.time < FlxG.sound.music.length && vocals.playing))
 			resyncVocals();
 		if (curStep == lastStepHit)
 			return;
