@@ -93,21 +93,8 @@ class ChartingState extends MusicBeatState
 			"Adds the value to the default camera zoom\nValue 1: Camera zoom add\nLeave blank if you want to go back to the original zoom."
 		],
 		[
-			'Set Shuttle Beats',
-			"Directly sets the next beat the shuttle\nwill interpolate to.\nValue 1: Beat\nLeave blank or <0 to destroy the shuttle when it's hit."
-		],
-		[
 			'Set Zoom Type',
 			"Changes the zoom type\nValue 1: Camera zoom type (Default: 0)\nValue 2: Beat offset (Default: 0)\nLeave the values blank if you want to use Default."
-		],
-		['Popup', "Causes a popup to spawn 50% of the time this event is triggered."],
-		[
-			'Vignette',
-			"Creates a vignette that bops to the beat.\nValue 1: Enabled\nTo set the visibility, type 'true' or 'false'"
-		],
-		[
-			'Subtitles',
-			"Makes subtitles appear.\nValue 1: Text\nValue 2: Character\nTo get rid of the text, leave value 1 blank."
 		],
 		[
 			'Flash Camera',
@@ -116,10 +103,6 @@ class ChartingState extends MusicBeatState
 		[
 			'Change Character Visibility',
 			"Changes a character's visibility.\nTo set the visibility, type 'true' or 'false'\nValue 1: Character to set (Dad, BF)\nValue 2: Visible (Default: True)"
-		],
-		[
-			'Extend Timer',
-			"Extends the timer to the next event, or the song's length\nwhen this event is reached."
 		],
 		['Play Sound', "Plays a sound\nValue 1: Sound to play."],
 		[
