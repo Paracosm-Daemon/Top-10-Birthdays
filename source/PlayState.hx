@@ -67,8 +67,10 @@ import sys.FileSystem;
 
 class PlayState extends MusicBeatState
 {
-	public static var STRUM_X = 42;
-	public static var STRUM_X_MIDDLESCROLL = -278;
+	public static var SONG_NAME:String = 'Bash';
+
+	public static var STRUM_X:Float = 42;
+	public static var STRUM_X_MIDDLESCROLL:Float = -278;
 
 	public static var ratingStuff:Array<Dynamic> = [
 		['Shit', .4],
@@ -225,10 +227,6 @@ class PlayState extends MusicBeatState
 	var hudShakeAmount:Float = 0;
 
 	var songLength:Float = 0;
-
-	var introSoundPrefix:String = '';
-
-	var ease:Dynamic = FlxEase.cubeInOut;
 	var startDelay:Float = 0;
 
 	var startedCountdown:Bool = false;
@@ -252,6 +250,13 @@ class PlayState extends MusicBeatState
 	// Debug buttons
 	private var debugKeysChart:Array<FlxKey>;
 	private var debugKeysCharacter:Array<FlxKey>;
+
+	public var evilAwesome:Character;
+	public var spiderman:Character;
+	public var thanos:Character;
+	public var mBest:Character;
+	public var santa:Character;
+	public var nft:Character;
 
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
@@ -375,7 +380,10 @@ class PlayState extends MusicBeatState
 		persistentDraw = true;
 
 		if (SONG == null)
-			SONG = Song.loadFromJson('bash');
+		{
+			var formatted:String = Paths.formatToSongPath(SONG_NAME);
+			SONG = Song.loadFromJson(formatted, formatted); // lolzoolzolzlzolzozololzolzolz
+		}
 
 		Conductor.mapBPMChanges(SONG);
 		Conductor.changeBPM(SONG.bpm);
@@ -401,6 +409,7 @@ class PlayState extends MusicBeatState
 
 				camera_boyfriend: [0, 0],
 				camera_opponent: [0, 0],
+
 				camera_speed: 1
 			};
 		}
@@ -471,24 +480,14 @@ class PlayState extends MusicBeatState
 		add(dadGroup);
 		add(boyfriendGroup);
 
-		dad = new Character(0, 0, SONG.player2);
-		startCharacterPos(dad);
+		// dad = new Character(0, 0, SONG.player2);
+		// startCharacterPos(dad);
 
-		dadGroup.add(dad);
+		// dadGroup.add(dad);
 		boyfriend = new Character(0, 0, SONG.player1, true);
 
 		startCharacterPos(boyfriend);
 		boyfriendGroup.add(boyfriend);
-
-		var camPos:FlxPoint = new FlxPoint();
-		camPos.set(opponentCameraOffset[0]
-			+ dad.getMidpoint().x
-			+ 150
-			+ dad.cameraPosition[0],
-			opponentCameraOffset[1]
-			+ dad.getMidpoint().y
-			- 100
-			+ dad.cameraPosition[1]);
 
 		Conductor.songPosition = -5000;
 
@@ -613,7 +612,6 @@ class PlayState extends MusicBeatState
 		camFollow = new FlxPoint();
 		camFollowPos = new FlxObject(0, 0, 1, 1);
 
-		snapCamFollowToPos(camPos.x, camPos.y);
 		if (prevCamFollow != null)
 		{
 			camFollow = prevCamFollow;
@@ -635,7 +633,9 @@ class PlayState extends MusicBeatState
 		FlxG.fixedTimestep = false;
 
 		isCameraOnForcedPos = true;
+
 		moveCameraSection();
+		snapCamFollowToPos(camFollowPos.x, camFollowPos.y);
 
 		healthBarBG = new AttachedSprite('healthBar');
 
@@ -666,7 +666,7 @@ class PlayState extends MusicBeatState
 		iconP1.alpha = ClientPrefs.healthBarAlpha;
 
 		add(iconP1);
-		iconP2 = new HealthIcon(dad.healthIcon, false);
+		iconP2 = new HealthIcon(dad != null ? dad.healthIcon : boyfriend.healthIcon, false);
 
 		iconP1.y = healthBar.y - 75;
 		iconP2.y = iconP1.y;
@@ -791,9 +791,9 @@ class PlayState extends MusicBeatState
 		return value;
 	}
 
-	function cancelCameraDelta(char:Character, forceDad:Bool = false)
+	function cancelCameraDelta(char:Null<Character>)
 	{
-		if (!char.animation.name.startsWith('sing'))
+		if (char != null && !char.animation.name.startsWith('sing'))
 		{
 			var deltaCancel:FlxPoint = switch (char.isPlayer)
 			{
@@ -824,7 +824,7 @@ class PlayState extends MusicBeatState
 	public function reloadHealthBarColors()
 	{
 		var p1Colors:Array<Int> = boyfriend.healthColorArray;
-		var p2Colors:Array<Int> = dad.healthColorArray;
+		var p2Colors:Array<Int> = (dad != null ? dad : boyfriend).healthColorArray;
 
 		healthBar.createFilledBar(FlxColor.fromRGB(p2Colors[0], p2Colors[1], p2Colors[2]), FlxColor.fromRGB(p1Colors[0], p1Colors[1], p1Colors[2]));
 		healthBar.updateBar();
@@ -927,10 +927,7 @@ class PlayState extends MusicBeatState
 		inCutscene = false;
 		isCameraOnForcedPos = false;
 
-		skipCountdown = switch (curSong)
-		{
-			default: false;
-		}
+		skipCountdown = false;
 		if (skipCountdown || startOnTime > 0) skipArrowStartTween = true;
 
 		generateStaticArrows(0);
@@ -1007,7 +1004,7 @@ class PlayState extends MusicBeatState
 
 				countdownImage.alpha = 1;
 				var tween:FlxTween = FlxTween.tween(countdownImage, {alpha: 0}, Conductor.crochet / 1000, {
-					ease: ease,
+					ease: FlxEase.quartInOut,
 					onComplete: function(twn:FlxTween)
 					{
 						if (loopsLeft <= 0)
@@ -1297,7 +1294,7 @@ class PlayState extends MusicBeatState
 		{
 			case 'Change Character':
 				{
-					var newCharacter:String = event.value2;
+					var newCharacter:String = event.value1.trim();
 					var path:String = Paths.getPreloadPath('characters/$newCharacter.json');
 
 					if (Assets.exists(path))
@@ -1556,11 +1553,11 @@ class PlayState extends MusicBeatState
 			- (150 * iconP2.scale.x) / 2
 			- iconOffset * 2;
 
-		iconP2.visible = !ClientPrefs.hideHud && dad.visible && dadGroup.visible;
-		iconP1.visible = !ClientPrefs.hideHud && boyfriend.visible && boyfriendGroup.visible;
+		iconP2.visible = !ClientPrefs.hideHud && dadGroup.visible && dad != null && dad.visible;
+		iconP1.visible = !ClientPrefs.hideHud && boyfriendGroup.visible && boyfriend.visible;
 
+		iconP2.alpha = (dad != null ? dad.alpha : 0) * dadGroup.alpha;
 		iconP1.alpha = boyfriend.alpha * boyfriendGroup.alpha;
-		iconP2.alpha = dad.alpha * dadGroup.alpha;
 
 		iconP2.setFrame(getFrame(100 - curHealth));
 		iconP1.setFrame(getFrame(curHealth));
@@ -1867,291 +1864,292 @@ class PlayState extends MusicBeatState
 	{
 		switch (eventName)
 		{
-			case 'Hey!':
-				{
-					var time:Float = Std.parseFloat(value2);
-					var value:Int = switch (value1.toLowerCase().trim())
-					{
-						case 'bf' | 'boyfriend' | '0': 0;
-						default: 2;
-					};
-
-					if (Math.isNaN(time) || time <= 0) { time = Conductor.crochet / 1000; }
-					else { time *= Conductor.crochet / 1000; }
-
-					if (value != 1)
-					{
-						boyfriend.playAnim('hey', true);
-
-						boyfriend.specialAnim = true;
-						boyfriend.heyTimer = time;
-					}
-				}
 			case 'Set GF Speed':
-				{
-					var value:Int = Std.parseInt(value1);
-					if (Math.isNaN(value))
-						value = 1;
-					gfSpeed = value;
-				}
+			{
+				var value:Int = Std.parseInt(value1);
+				if (Math.isNaN(value))
+					value = 1;
+				gfSpeed = value;
+			}
 			case 'Add Camera Zoom':
+			{
+				if (canZoomCamera())
 				{
-					if (canZoomCamera())
-					{
-						var camZoomAdding:Float = Std.parseFloat(value1);
-						var hudZoomAdding:Float = Std.parseFloat(value2);
+					var camZoomAdding:Float = Std.parseFloat(value1);
+					var hudZoomAdding:Float = Std.parseFloat(value2);
 
-						if (Math.isNaN(camZoomAdding)) camZoomAdding = .015;
-						if (Math.isNaN(hudZoomAdding)) hudZoomAdding = .03;
+					if (Math.isNaN(camZoomAdding)) camZoomAdding = .015;
+					if (Math.isNaN(hudZoomAdding)) hudZoomAdding = .03;
 
-						gameZoomAdd += camZoomAdding;
-						hudZoomAdd += hudZoomAdding;
-					}
+					gameZoomAdd += camZoomAdding;
+					hudZoomAdd += hudZoomAdding;
 				}
-
+			}
 			case 'Set Zoom Type':
-				{
-					var beats:Int = Std.parseInt(value2.trim());
-					var type:Int = Std.parseInt(value1.trim());
+			{
+				var beats:Int = Std.parseInt(value2.trim());
+				var type:Int = Std.parseInt(value1.trim());
 
-					camZoomType = Math.isNaN(type) ? 0 : Std.int(CoolUtil.boundTo(type, 0, camZoomTypes.length - 1));
-					camZoomTypeBeatOffset = Math.isNaN(beats) ? 0 : beats;
-				}
+				camZoomType = Math.isNaN(type) ? 0 : Std.int(CoolUtil.boundTo(type, 0, camZoomTypes.length - 1));
+				camZoomTypeBeatOffset = Math.isNaN(beats) ? 0 : beats;
+			}
 			case 'Change Default Zoom':
-				{
-					var value:Float = Std.parseFloat(value1.trim());
-					defaultCamZoom = stageData.defaultZoom + (Math.isNaN(value) ? 0 : value);
-				}
+			{
+				var value:Float = Std.parseFloat(value1.trim());
+				defaultCamZoom = stageData.defaultZoom + (Math.isNaN(value) ? 0 : value);
+			}
 			case 'Flash Camera':
+			{
+				var duration:Float = Std.parseFloat(value1.trim());
+				var color:String = value2.trim();
+
+				if (color.length > 1)
 				{
-					var duration:Float = Std.parseFloat(value1.trim());
-					var color:String = value2.trim();
-
-					if (color.length > 1)
-					{
-						if (!color.startsWith('0x'))
-							color = '0xFF$color';
-					}
-					else
-					{
-						color = "0xFFFFFFFF";
-					}
-
-					if (ClientPrefs.flashing)
-						camOther.flash(Std.parseInt(color), Math.isNaN(duration) ? 1 : duration, null, true);
+					if (!color.startsWith('0x'))
+						color = '0xFF$color';
 				}
+				else
+				{
+					color = "0xFFFFFFFF";
+				}
+
+				if (ClientPrefs.flashing)
+					camOther.flash(Std.parseInt(color), Math.isNaN(duration) ? 1 : duration, null, true);
+			}
 			case 'Change Character Visibility':
+			{
+				var visibility:String = value2.toLowerCase();
+				var char:Character = switch (value1.toLowerCase().trim())
 				{
-					var visibility:String = value2.toLowerCase();
-					var char:Character = switch (value1.toLowerCase().trim())
-					{
-						case 'dad' | 'opponent': dad;
-						default: boyfriend;
-					};
-					char.visible = visibility.length <= 1 || visibility.startsWith('true');
-				}
-
+					case 'dad' | 'opponent': dad;
+					default: boyfriend;
+				};
+				char.visible = visibility.length <= 1 || visibility.startsWith('true');
+			}
 			case 'Play Sound':
+			{
+				try
 				{
-					try
-					{
-						var sound:Dynamic = Reflect.getProperty(this, value1);
-						if (sound != null && Std.isOfType(sound, FlxSound))
-							sound.play(true);
-					}
-					catch (e:Dynamic)
-					{
-						trace('Unknown sound tried to be played - $e');
-					}
+					var sound:Dynamic = Reflect.getProperty(this, value1);
+					if (sound != null && Std.isOfType(sound, FlxSound))
+						sound.play(true);
 				}
+				catch (e:Dynamic)
+				{
+					trace('Unknown sound tried to be played - $e');
+				}
+			}
 			case 'Play Animation':
+			{
+				// trace('Anim to play: ' + value1);
+				var char:Character = switch (value2.toLowerCase().trim())
 				{
-					// trace('Anim to play: ' + value1);
-					var char:Character = switch (value2.toLowerCase().trim())
-					{
-						case 'bf' | 'boyfriend': boyfriend;
-						default:
+					case 'bf' | 'boyfriend': boyfriend;
+					default:
+						{
+							var val2:Int = Std.parseInt(value2);
+
+							if (Math.isNaN(val2))
+								val2 = 0;
+							switch (val2)
 							{
-								var val2:Int = Std.parseInt(value2);
-
-								if (Math.isNaN(val2))
-									val2 = 0;
-								switch (val2)
-								{
-									case 1: boyfriend;
-									default: dad;
-								}
+								case 1: boyfriend;
+								default: dad;
 							}
-					}
-
-					char.playAnim(value1, true);
-					char.specialAnim = true;
+						}
 				}
+
+				char.playAnim(value1, true);
+				char.specialAnim = true;
+			}
 			case 'Camera Follow Pos':
+			{
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+
+				if (Math.isNaN(val1))
+					val1 = 0;
+				if (Math.isNaN(val2))
+					val2 = 0;
+
+				isCameraOnForcedPos = false;
+				if (!Math.isNaN(Std.parseFloat(value1)) || !Math.isNaN(Std.parseFloat(value2)))
 				{
-					var val1:Float = Std.parseFloat(value1);
-					var val2:Float = Std.parseFloat(value2);
+					camFollow.x = val1;
+					camFollow.y = val2;
 
-					if (Math.isNaN(val1))
-						val1 = 0;
-					if (Math.isNaN(val2))
-						val2 = 0;
+					isCameraOnForcedPos = true;
+				}
+			}
+			case 'Alt Idle Animation':
+			{
+				var char:Character = switch (value1.toLowerCase())
+				{
+					case 'boyfriend' | 'bf': boyfriend;
+					default:
+						{
+							var val:Int = Std.parseInt(value1);
 
-					isCameraOnForcedPos = false;
-					if (!Math.isNaN(Std.parseFloat(value1)) || !Math.isNaN(Std.parseFloat(value2)))
+							if (Math.isNaN(val))
+								val = 0;
+							switch (val)
+							{
+								case 1: boyfriend;
+								default: dad;
+							}
+						}
+				}
+
+				char.idleSuffix = value2;
+				char.recalculateDanceIdle();
+			}
+			case 'Sustain Shake':
+			{
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+
+				if (Math.isNaN(val1))
+					val1 = 0;
+				if (Math.isNaN(val2))
+					val2 = 0;
+
+				gameShakeAmount = val1;
+				hudShakeAmount = val2;
+
+				doSustainShake();
+			}
+			case 'Screen Shake':
+			{
+				if (!ClientPrefs.reducedMotion)
+				{
+					var valuesArray:Array<String> = [value1, value2];
+					var targetsArray:Array<FlxCamera> = [camGame, camHUD];
+
+					for (i in 0...targetsArray.length)
 					{
-						camFollow.x = val1;
-						camFollow.y = val2;
+						var split:Array<String> = valuesArray[i].split(',');
 
-						isCameraOnForcedPos = true;
+						var intensity:Float = 0;
+						var duration:Float = 0;
+
+						if (split[1] != null)
+							intensity = Std.parseFloat(split[1].trim());
+						if (split[0] != null)
+							duration = Std.parseFloat(split[0].trim());
+
+						if (Math.isNaN(intensity))
+							intensity = 0;
+						if (Math.isNaN(duration))
+							duration = 0;
+
+						if (duration > 0 && intensity != 0)
+							targetsArray[i].shake(intensity, duration);
 					}
 				}
-			case 'Alt Idle Animation':
+			}
+			case 'Change Character':
+			{
+				// check if we're trying to append the character
+				var trimmed:String = value1.trim().toLowerCase();
+				var property:String = switch (trimmed)
 				{
-					var char:Character = switch (value1.toLowerCase())
-					{
-						case 'boyfriend' | 'bf': boyfriend;
-						default:
-							{
-								var val:Int = Std.parseInt(value1);
+					case 'eviltop10': 'evilAwesome';
+					case 'spiderman': 'spiderman';
+					case 'thanos': 'thanos';
+					case 'santa': 'santa';
+					case 'mbest': 'mBest';
+					case 'nft': 'nft';
 
-								if (Math.isNaN(val))
-									val = 0;
-								switch (val)
+					default: null;
+				};
+
+				if (property != null)
+				{
+					var thisChar:Character = Reflect.getProperty(this, property);
+					if (thisChar == null)
+					{
+						thisChar = new Character(0, 0, value1, false);
+						thisChar.setPosition(DAD_X, DAD_Y);
+
+						startCharacterPos(thisChar);
+						Reflect.setProperty(this, property, thisChar);
+						// do an intro
+						switch (property.toLowerCase())
+						{
+							case 'evilawesome': // evil awesome
+							{
+								trace('evil awesome intro!!!!');
+
+								thisChar.playAnim('crash', true);
+								thisChar.specialAnim = true;
+
+								thisChar.animation.callback = function(anim:String, frameNumber:Int, frameIndex:Int)
 								{
-									case 1: boyfriend;
-									default: dad;
+									if (anim == 'crash' && frameIndex > 2)
+									{
+										trace('spa');
+
+										boyfriend.playAnim('clean', true);
+										boyfriend.specialAnim = true;
+
+										thisChar.animation.callback = null;
+									}
 								}
 							}
-					}
-
-					char.idleSuffix = value2;
-					char.recalculateDanceIdle();
-				}
-			case 'Sustain Shake':
-				{
-					var val1:Float = Std.parseFloat(value1);
-					var val2:Float = Std.parseFloat(value2);
-
-					if (Math.isNaN(val1))
-						val1 = 0;
-					if (Math.isNaN(val2))
-						val2 = 0;
-
-					gameShakeAmount = val1;
-					hudShakeAmount = val2;
-
-					doSustainShake();
-				}
-			case 'Screen Shake':
-				{
-					if (!ClientPrefs.reducedMotion)
-					{
-						var valuesArray:Array<String> = [value1, value2];
-						var targetsArray:Array<FlxCamera> = [camGame, camHUD];
-
-						for (i in 0...targetsArray.length)
-						{
-							var split:Array<String> = valuesArray[i].split(',');
-
-							var intensity:Float = 0;
-							var duration:Float = 0;
-
-							if (split[1] != null)
-								intensity = Std.parseFloat(split[1].trim());
-							if (split[0] != null)
-								duration = Std.parseFloat(split[0].trim());
-
-							if (Math.isNaN(intensity))
-								intensity = 0;
-							if (Math.isNaN(duration))
-								duration = 0;
-
-							if (duration > 0 && intensity != 0)
-								targetsArray[i].shake(intensity, duration);
 						}
+						dadGroup.add(thisChar);
 					}
-				}
+					// set the dad
+					dad = thisChar;
+					iconP2.changeIcon(dad.healthIcon);
 
-			case 'Change Character':
-				{
-					var charType:Int = switch (value1)
-					{
-						case 'dad' | 'opponent': 1;
-						default:
-							{
-								var temp:Int = Std.parseInt(value1);
-								Math.isNaN(temp) ? 0 : temp;
-							}
-					}
-					var characterPositioning:Character = switch (charType)
-					{
-						case 1: dad;
-						default: boyfriend;
-					}
-
-					if (characterPositioning.curCharacter != value2)
-					{
-						switch (charType)
-						{
-							case 1: { if (dad.curCharacter != value2) characterPositioning.setPosition(DAD_X, DAD_Y); }
-							case 0: { characterPositioning.setPosition(BF_X, BF_Y); }
-						}
-
-						characterPositioning.setCharacter(value2);
-						startCharacterPos(characterPositioning);
-					}
-					var iconChanging:HealthIcon = switch (charType)
-					{
-						default: iconP1;
-						case 1: iconP2;
-					};
-
-					iconChanging.changeIcon(characterPositioning.healthIcon);
 					reloadHealthBarColors();
 				}
+			}
 			case 'Change Scroll Speed':
+			{
+				var val1:Float = Std.parseFloat(value1);
+				var val2:Float = Std.parseFloat(value2);
+
+				if (Math.isNaN(val1))
+					val1 = 1;
+				if (Math.isNaN(val2))
+					val2 = 0;
+
+				var newValue:Float = switch (songSpeedType)
 				{
-					var val1:Float = Std.parseFloat(value1);
-					var val2:Float = Std.parseFloat(value2);
-
-					if (Math.isNaN(val1))
-						val1 = 1;
-					if (Math.isNaN(val2))
-						val2 = 0;
-
-					var newValue:Float = switch (songSpeedType)
-					{
-						default: SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
-						case "constant": ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
-					}
-
-					if (val2 <= 0) { songSpeed = newValue; }
-					else
-					{
-						songSpeedTween = FlxTween.tween(this, {songSpeed: newValue}, val2, {
-							ease: FlxEase.linear,
-							onComplete: function(twn:FlxTween)
-							{
-								cleanupTween(twn);
-								songSpeedTween = null;
-							}
-						});
-					}
+					default: SONG.speed * ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
+					case "constant": ClientPrefs.getGameplaySetting('scrollspeed', 1) * val1;
 				}
+
+				if (val2 <= 0) { songSpeed = newValue; }
+				else
+				{
+					songSpeedTween = FlxTween.tween(this, {songSpeed: newValue}, val2, {
+						ease: FlxEase.linear,
+						onComplete: function(twn:FlxTween)
+						{
+							cleanupTween(twn);
+							songSpeedTween = null;
+						}
+					});
+				}
+			}
 		}
 	}
 
 	function moveCameraSection(?id:Int = 0):Void
 	{
-		if (SONG.notes[id] == null) return;
-		moveCamera(!SONG.notes[id].mustHitSection);
+		var section:SwagSection = SONG.notes[id];
+
+		if (section == null) return;
+		moveCamera(!section.mustHitSection);
 	}
 
 	var cameraTwn:FlxTween;
 	public function moveCamera(isDad:Bool)
 	{
-		if (isDad)
+		if (isDad && dad != null)
 		{
 			camFollow.set(dad.getMidpoint().x + 150, dad.getMidpoint().y - 100);
 
@@ -2774,33 +2772,36 @@ class PlayState extends MusicBeatState
 	function opponentNoteHit(note:Note):Void
 	{
 		var isAlternative:Bool = false;
-		if (note.noteType == 'Hey!')
+		if (!note.noAnimation)
 		{
-			if (dad.animOffsets.exists('hey'))
-			{
-				dad.playAnim('hey', true);
+			var noteType:String = Paths.formatToSongPath(note.noteType);
 
-				dad.specialAnim = true;
-				dad.heyTimer = .6;
-			}
-		}
-		else if (!note.noAnimation)
-		{
 			var char:Character = dad;
 			var altAnim:String = "";
 
 			var curSection:Int = Math.floor(curStep / 16);
-			if (SONG.notes[curSection] != null)
+			var section:SwagSection = SONG.notes[curSection];
+
+			if (section != null && (section.altAnim || noteType == 'alt-animation')) altAnim = '-alt';
+
+			var leData:Int = Math.round(Math.abs(note.noteData));
+			var singAnim:String = singAnimations[leData] + altAnim;
+
+			switch (noteType)
 			{
-				if (SONG.notes[curSection].altAnim || note.noteType == 'Alt Animation')
+				case 'mbest-note': char = mBest;
+				case 'nft-note': char = nft;
+
+				case 'mbest-and-nft-note':
 				{
-					altAnim = '-alt';
+					trace('sang it');
+
+					var otherChar:Character = char == nft ? mBest : nft;
+					playCharacterAnim(otherChar, singAnim, note);
 				}
 			}
 
-			var leData:Int = Math.round(Math.abs(note.noteData));
-			var didPlay:Bool = playCharacterAnim(char, singAnimations[leData] + altAnim, note);
-
+			var didPlay:Bool = playCharacterAnim(char, singAnim + altAnim, note);
 			if (didPlay)
 			{
 				var camDelta:FlxPoint = getCameraDelta(leData);

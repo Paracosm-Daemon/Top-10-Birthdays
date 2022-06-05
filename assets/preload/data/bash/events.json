@@ -1,0 +1,46 @@
+{
+	"song": {
+		"events": [
+			[
+				31500,
+				[
+					[
+						"Change Character",
+						"eviltop10",
+						""
+					]
+				]
+			],
+			[
+				79500,
+				[
+					[
+						"Change Character",
+						"nft",
+						""
+					]
+				]
+			],
+			[
+				104000,
+				[
+					[
+						"Change Character",
+						"eviltop10",
+						""
+					]
+				]
+			],
+			[
+				112000,
+				[
+					[
+						"Change Character",
+						"nft",
+						""
+					]
+				]
+			]
+		]
+	}
+}

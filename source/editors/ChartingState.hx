@@ -59,12 +59,14 @@ import Discord.DiscordClient;
 class ChartingState extends MusicBeatState
 {
 	public static var noteTypeList:Array<String> = // Used for backwards compatibility with .1 - .3.2 charts, though, you should add your hardcoded custom note types here too.
-		[
-			'',
-			'Alt Animation',
-			'Hey!',
-			'No Animation'
-		];
+	[
+		'',
+		'Alt Animation',
+		'No Animation',
+		'MBest Note',
+		'NFT Note',
+		'MBest and NFT Note'
+	];
 
 	private var noteTypeIntMap:Map<Int, String> = new Map<Int, String>();
 	private var noteTypeMap:Map<String, Null<Int>> = new Map<String, Null<Int>>();
@@ -76,10 +78,6 @@ class ChartingState extends MusicBeatState
 	var redos = [];
 	var eventStuff:Array<Dynamic> = [
 		['', "Nothing. Yep, that's right."],
-		[
-			'Hey!',
-			"Plays the \"Hey!\" animation from Bopeebo,\nValue 1: BF = Only Boyfriend,\nSomething else = Both.\nValue 2: Custom animation duration,\nleave it blank for .6s"
-		],
 		[
 			'Set GF Speed',
 			"Sets GF head bopping speed,\nValue 1: 1 = Normal speed,\n2 = 1/2 speed, 4 = 1/4 speed etc.\nUsed on Fresh during the beatbox parts.\n\nWarning: Value must be integer!"
@@ -127,7 +125,7 @@ class ChartingState extends MusicBeatState
 		],
 		[
 			'Change Character',
-			"Value 1: Character to change (Dad, BF)\nValue 2: New character's name"
+			"Value 1: New character's name"
 		],
 		[
 			'Change Scroll Speed',
