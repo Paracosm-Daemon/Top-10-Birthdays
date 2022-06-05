@@ -3019,7 +3019,7 @@ class PlayState extends MusicBeatState
 			return;
 
 		var zoomFunction:Array<Dynamic> = camZoomTypes[camZoomType];
-		if (canZoomCamera() && !zoomFunction[0])
+		if (zoomFunction != null && canZoomCamera() && !zoomFunction[0])
 			zoomFunction[1]();
 
 		doSustainShake();
@@ -3078,7 +3078,7 @@ class PlayState extends MusicBeatState
 		}
 
 		var zoomFunction:Array<Dynamic> = camZoomTypes[camZoomType];
-		if (canZoomCamera() && zoomFunction[0])
+		if (zoomFunction != null && canZoomCamera() && zoomFunction[0])
 			zoomFunction[1]();
 
 		iconBop(curBeat);
