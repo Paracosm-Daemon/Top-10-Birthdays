@@ -128,6 +128,10 @@ class PlayState extends MusicBeatState
 	public var opponentStrums:FlxTypedGroup<StrumNote>;
 
 	public var stageGroup:FlxTypedGroup<BGSprite>;
+	public var foregroundGroup:FlxSpriteGroup;
+
+	public var presentOverlayGroup:FlxSpriteGroup;
+	public var presentGroup:FlxSpriteGroup;
 
 	public var playerStrums:FlxTypedGroup<StrumNote>;
 	public var grpNoteSplashes:FlxTypedGroup<NoteSplash>;
@@ -258,6 +262,8 @@ class PlayState extends MusicBeatState
 	public var santa:Character;
 	public var nft:Character;
 
+	var totalChars:FlxSpriteGroup;
+	var cake:BGSprite;
 	// Less laggy controls
 	private var keysArray:Array<Dynamic>;
 	override public function create()
@@ -438,6 +444,10 @@ class PlayState extends MusicBeatState
 		dadGroup = new FlxSpriteGroup(DAD_X, DAD_Y);
 
 		stageGroup = new FlxTypedGroup<BGSprite>();
+
+		foregroundGroup = new FlxSpriteGroup();
+		totalChars = new FlxSpriteGroup();
+
 		switch (curStage)
 		{
 			case 'stage': // Tutorial
@@ -475,10 +485,54 @@ class PlayState extends MusicBeatState
 					add(stageCurtains);
 				}
 			}
+			case 'birthday':
+			{
+				var bg:BGSprite = new BGSprite('background', 0, 0, .5, .5);
+
+				var house:BGSprite = new BGSprite('house');
+				var hallway:BGSprite = new BGSprite('hallway');
+
+				var windows:BGSprite = new BGSprite('window_crash', 500, 400, 1, 1, ['window crash']);
+
+				var door_inside:BGSprite = new BGSprite('door/inside');
+				var door_outside:BGSprite = new BGSprite('door/outside');
+
+				var table:BGSprite = new BGSprite('table');
+
+				var present_inside = new BGSprite('present/inside');
+				var present_outside = new BGSprite('present/outside');
+				var present_cover = new BGSprite('present/cover');
+
+				presentOverlayGroup = new FlxSpriteGroup();
+				presentGroup = new FlxSpriteGroup();
+
+				cake = new BGSprite('cake');
+				add(bg);
+
+				add(house);
+				add(hallway);
+
+				add(windows);
+
+				add(door_inside);
+				add(door_outside);
+
+				foregroundGroup.add(table);
+				foregroundGroup.add(cake);
+
+				presentGroup.add(present_inside);
+
+				presentOverlayGroup.add(present_outside);
+				presentOverlayGroup.add(present_cover);
+			}
 		}
 
 		add(dadGroup);
 		add(boyfriendGroup);
+		add(foregroundGroup);
+
+		add(presentGroup);
+		add(presentOverlayGroup);
 
 		// dad = new Character(0, 0, SONG.player2);
 		// startCharacterPos(dad);
@@ -658,8 +712,8 @@ class PlayState extends MusicBeatState
 		healthBar.alpha = ClientPrefs.healthBarAlpha;
 
 		add(healthBar);
-		healthBarBG.sprTracker = healthBar;
 
+		healthBarBG.sprTracker = healthBar;
 		iconP1 = new HealthIcon(boyfriend.healthIcon, true);
 
 		iconP1.visible = !ClientPrefs.hideHud;
@@ -983,7 +1037,8 @@ class PlayState extends MusicBeatState
 			var count = tmr.elapsedLoops - 2;
 
 			groupDance(boyfriendGroup, beat);
-			groupDance(dadGroup, beat);
+			// groupDance(dadGroup, beat);
+			groupDance(totalChars, beat);
 
 			stageDance(beat);
 			iconBop(beat);
@@ -1387,7 +1442,7 @@ class PlayState extends MusicBeatState
 			if (songSpeedTween != null)
 				songSpeedTween.active = false;
 
-			var chars:Array<Character> = [boyfriend, dad];
+			var chars:Array<Character> = [boyfriend, dad, nft, spiderman, thanos, santa, evilAwesome, mBest];
 			for (char in chars)
 			{
 				if (char != null && char.colorTween != null)
@@ -1417,7 +1472,7 @@ class PlayState extends MusicBeatState
 			if (songSpeedTween != null)
 				songSpeedTween.active = true;
 
-			var chars:Array<Character> = [boyfriend, dad];
+			var chars:Array<Character> = [boyfriend, dad, nft, spiderman, thanos, santa, evilAwesome, mBest];
 			for (char in chars)
 			{
 				if (char != null && char.colorTween != null)
@@ -2068,17 +2123,20 @@ class PlayState extends MusicBeatState
 					var thisChar:Character = Reflect.getProperty(this, property);
 					if (thisChar == null)
 					{
-						thisChar = new Character(0, 0, value1, false);
-						thisChar.setPosition(DAD_X, DAD_Y);
-
+						thisChar = new Character(DAD_X, DAD_Y, value1, false);
 						startCharacterPos(thisChar);
+
 						Reflect.setProperty(this, property, thisChar);
+						totalChars.add(thisChar);
 						// do an intro
 						switch (property.toLowerCase())
 						{
 							case 'evilawesome': // evil awesome
 							{
 								trace('evil awesome intro!!!!');
+
+								thisChar.x += 1075;
+								thisChar.y += 300;
 
 								thisChar.playAnim('crash', true);
 								thisChar.specialAnim = true;
@@ -2089,15 +2147,43 @@ class PlayState extends MusicBeatState
 									{
 										trace('spa');
 
+										cake.visible = false;
+										cake.kill();
+
+										foregroundGroup.remove(cake);
+
+										cake.destroy();
+										cake = null;
+
 										boyfriend.playAnim('clean', true);
 										boyfriend.specialAnim = true;
 
 										thisChar.animation.callback = null;
 									}
 								}
+								foregroundGroup.add(thisChar);
+							}
+							case 'nft':
+							{
+								var originalHeight:Float = thisChar.height;
+								var originalWidth:Float = thisChar.width;
+
+								thisChar.height = 0;
+								thisChar.width = 0;
+
+								modchartTweens.push(FlxTween.tween(thisChar, { width: originalWidth, height: originalHeight }, Conductor.crochet / 1000, { onComplete: cleanupTween }));
+
+								if (presentGroup != null) { presentGroup.add(thisChar); }
+								else { foregroundGroup.add(thisChar); }
+							}
+
+							case 'thanos':
+							{
+								thisChar.alpha = 0;
+								modchartTweens.push(FlxTween.tween(thisChar, { alpha: 1 }, Conductor.crochet / 500, { ease: FlxEase.quartInOut, onComplete: cleanupTween }));
 							}
 						}
-						dadGroup.add(thisChar);
+						// dadGroup.add(thisChar);
 					}
 					// set the dad
 					dad = thisChar;
@@ -2171,35 +2257,35 @@ class PlayState extends MusicBeatState
 
 	function tweenCamZoom(opponent:Bool = false)
 	{
-		var start:Float = defaultCamZoom;
-		switch (curSong)
-		{
-			case 'tutorial':
-			{
-				var target:Float = opponent ? 1.3 : 1;
-				if (start != target)
-				{
-					if (cameraTwn != null)
-					{
-						cameraTwn.cancel();
-						cleanupTween(cameraTwn);
-						cameraTwn = null;
-					}
+		// var start:Float = defaultCamZoom;
+		// switch (curSong)
+		// {
+		// 	case 'tutorial':
+		// 	{
+		// 		var target:Float = opponent ? 1.3 : 1;
+		// 		if (start != target)
+		// 		{
+		// 			if (cameraTwn != null)
+		// 			{
+		// 				cameraTwn.cancel();
+		// 				cleanupTween(cameraTwn);
+		// 				cameraTwn = null;
+		// 			}
 
-					defaultCamZoom = target;
-					cameraTwn = FlxTween.num(start, target, Conductor.crochet / 1000, {
-						ease: FlxEase.elasticInOut,
+		// 			defaultCamZoom = target;
+		// 			cameraTwn = FlxTween.num(start, target, Conductor.crochet / 1000, {
+		// 				ease: FlxEase.elasticInOut,
 
-						onUpdate: function(twn:FlxTween) { gameZoom = FlxMath.lerp(start, target, twn.scale); },
-						onComplete: function(twn:FlxTween)
-						{
-							cleanupTween(twn);
-							cameraTwn = null;
-						}
-					});
-				}
-			}
-		}
+		// 				onUpdate: function(twn:FlxTween) { gameZoom = FlxMath.lerp(start, target, twn.scale); },
+		// 				onComplete: function(twn:FlxTween)
+		// 				{
+		// 					cleanupTween(twn);
+		// 					cameraTwn = null;
+		// 				}
+		// 			});
+		// 		}
+		// 	}
+		// }
 	}
 
 	function snapCamFollowToPos(x:Float, y:Float)
@@ -2794,8 +2880,6 @@ class PlayState extends MusicBeatState
 
 				case 'mbest-and-nft-note':
 				{
-					trace('sang it');
-
 					var otherChar:Character = char == nft ? mBest : nft;
 					playCharacterAnim(otherChar, singAnim, note);
 				}
@@ -3078,7 +3162,8 @@ class PlayState extends MusicBeatState
 		iconBop(curBeat);
 
 		groupDance(boyfriendGroup, curBeat);
-		groupDance(dadGroup, curBeat);
+		// groupDance(dadGroup, curBeat);
+		groupDance(totalChars, curBeat);
 
 		stageDance(curBeat);
 		lastBeatHit = curBeat;

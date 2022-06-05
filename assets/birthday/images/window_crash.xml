@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="window_crash.png">
+	<!-- Created with Adobe Animate version 21.0.6.41649 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="window crash0000" x="100" y="100" width="2413" height="683" pivotX="1504.2" pivotY="471" frameX="-203" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0001" x="100" y="883" width="2547" height="797" frameX="-69" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0002" x="100" y="1780" width="2616" height="1063"/>
+	<SubTexture name="window crash0003" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0004" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0005" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0006" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0007" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0008" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0009" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0010" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0011" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0012" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0013" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0014" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+	<SubTexture name="window crash0015" x="100" y="2943" width="2262" height="683" frameX="-354" frameY="0" frameWidth="2616" frameHeight="1063"/>
+</TextureAtlas>

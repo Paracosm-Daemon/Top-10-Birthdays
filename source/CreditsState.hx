@@ -51,10 +51,10 @@ class CreditsState extends MusicBeatState
 		],
 		[
 			'J',
-			'pandemonium',
-			'Composer of Bash and the menu theme',
+			'j',
+			'Composer of Bash and the Menu theme',
 			['https://twitter.com/Fwuffy_J', 'https://www.youtube.com/channel/UCUbzTC7u5sBT--ZR6zJ5m1A', 'https://www.roblox.com/users/3513131884/profile'],
-			'3C084C'
+			'99FDC5'
 		],
 		[
 			'Crash',

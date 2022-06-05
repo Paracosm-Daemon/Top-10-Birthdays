@@ -1,7 +1,7 @@
 {
 	"song": {
 		"player1": "top10",
-		"player2": "test",
+		"player2": null,
 		"notes": [
 			{
 				"lengthInSteps": 16,
@@ -293,6 +293,15 @@
 				"altAnim": false,
 				"bpm": 120,
 				"changeBPM": false,
+				"mustHitSection": true
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"bpm": 120,
+				"changeBPM": false,
 				"mustHitSection": false
 			},
 			{
@@ -311,16 +320,7 @@
 				"altAnim": false,
 				"bpm": 120,
 				"changeBPM": false,
-				"mustHitSection": true
-			},
-			{
-				"lengthInSteps": 16,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"altAnim": false,
-				"bpm": 120,
-				"changeBPM": false,
-				"mustHitSection": true
+				"mustHitSection": false
 			},
 			{
 				"lengthInSteps": 16,
@@ -2566,6 +2566,26 @@
 						0
 					],
 					[
+						106625,
+						0,
+						0
+					],
+					[
+						106750,
+						2,
+						0
+					],
+					[
+						106875,
+						1,
+						0
+					],
+					[
+						107000,
+						3,
+						0
+					],
+					[
 						107125,
 						0,
 						0
@@ -2618,41 +2638,6 @@
 					[
 						107562.5,
 						2,
-						0
-					],
-					[
-						106437.5,
-						0,
-						0
-					],
-					[
-						106562.5,
-						3,
-						0
-					],
-					[
-						106812.5,
-						0,
-						0
-					],
-					[
-						107000,
-						3,
-						0
-					],
-					[
-						106625,
-						2,
-						0
-					],
-					[
-						106750,
-						3,
-						0
-					],
-					[
-						106875,
-						1,
 						0
 					]
 				],
@@ -20753,32 +20738,38 @@
 					[
 						548000,
 						3,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						548250,
 						1,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						548375,
 						1,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						548500,
 						3,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						548750,
 						2,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						549000,
 						0,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						549125,
@@ -20788,27 +20779,32 @@
 					[
 						549250,
 						3,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						549375,
 						2,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						549500,
 						0,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						549750,
 						2,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						549875,
 						1,
-						0
+						0,
+						"MBest and NFT Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -20821,44 +20817,52 @@
 			{
 				"sectionNotes": [
 					[
+						550625,
+						2,
+						0,
+						"NFT Note"
+					],
+					[
 						550000,
 						3,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						550125,
 						0,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						550250,
 						3,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						550500,
 						1,
-						0
-					],
-					[
-						550625,
-						2,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						550750,
 						0,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						551000,
 						3,
-						0
+						0,
+						"MBest and NFT Note"
 					],
 					[
 						551500,
 						1,
-						0
+						0,
+						"MBest and NFT Note"
 					]
 				],
 				"typeOfSection": 0,
@@ -22556,20 +22560,10 @@
 				"bpm": 120,
 				"changeBPM": false,
 				"mustHitSection": true
-			},
-			{
-				"lengthInSteps": 16,
-				"altAnim": false,
-				"typeOfSection": 0,
-				"sectionNotes": [],
-				"bpm": 120,
-				"changeBPM": false,
-				"mustHitSection": true
 			}
 		],
 		"splashSkin": "noteSplashes",
 		"song": "Bash",
-		"stage": "stage",
 		"validScore": true,
 		"arrowSkin": "",
 		"needsVoices": true,

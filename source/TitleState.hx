@@ -40,7 +40,7 @@ class TitleState extends MusicBeatState
 	public static var initialized:Bool = false;
 	private static var titleJSON:TitleData;
 
-	private var sickBeats:Int = -1; // Basically curBeat but won't be skipped if you hold the tab or resize the screen
+	private var sickSteps:Int = -1; // Basically curBeat but won't be skipped if you hold the tab or resize the screen
 	public static var closedState:Bool = false;
 
 	var canYouFuckingWait:Bool = false;
@@ -126,7 +126,7 @@ class TitleState extends MusicBeatState
 
 	public static function playTitleMusic(volume:Float = 1)
 	{
-		FlxG.sound.playMusic(Paths.music('freakyMenu'), volume);
+		FlxG.sound.playMusic(Paths.music('birthdayMenu'), volume);
 		if (titleJSON != null)
 			Conductor.changeBPM(titleJSON.bpm);
 	}
@@ -136,7 +136,13 @@ class TitleState extends MusicBeatState
 		persistentUpdate = true;
 		var bg:FlxSprite = new FlxSprite();
 
-		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none") { bg.loadGraphic(Paths.image(titleJSON.backgroundSprite)); }
+		if (titleJSON.backgroundSprite != null && titleJSON.backgroundSprite.length > 0 && titleJSON.backgroundSprite != "none")
+		{
+			bg.loadGraphic(Paths.image(titleJSON.backgroundSprite));
+
+			bg.setGraphicSize(-1, FlxG.height);
+			bg.updateHitbox();
+		}
 		else { bg.makeGraphic(FlxG.width, FlxG.height, FlxColor.BLACK); }
 
 		bg.antialiasing = ClientPrefs.globalAntialiasing;
@@ -145,7 +151,7 @@ class TitleState extends MusicBeatState
 		add(bg);
 
 		logoBl = new FlxSprite();
-		logoBl.frames = Paths.getSparrowAtlas('Start_Screen_Assets');
+		logoBl.frames = Paths.getSparrowAtlas('top10_logo');
 
 		logoBl.antialiasing = ClientPrefs.globalAntialiasing;
 
@@ -160,10 +166,14 @@ class TitleState extends MusicBeatState
 		logoBl.x += titleJSON.titlex;
 		logoBl.y += titleJSON.titley;
 
-		titleText = new FlxSprite().loadGraphic(Paths.image('enter'));
-		titleText.antialiasing = ClientPrefs.globalAntialiasing;
+		titleText = new FlxSprite();
+		titleText.frames = Paths.getSparrowAtlas('titleEnter');
 
-		titleText.setGraphicSize(Std.int(titleText.width * .8));
+		titleText.animation.addByPrefix('idle', "Press Enter to Begin", 24);
+		titleText.animation.addByPrefix('press', "ENTER PRESSED", 24);
+
+		titleText.antialiasing = ClientPrefs.globalAntialiasing;
+		titleText.animation.play('idle');
 
 		titleText.updateHitbox();
 		titleText.screenCenter();
@@ -246,19 +256,8 @@ class TitleState extends MusicBeatState
 			if (pressedEnter)
 			{
 				transitioning = true;
-				switch (ClientPrefs.flashing)
-				{
-					case true:
-					{
-						FlxG.camera.flash(FlxColor.WHITE, 1, null, true);
-						FlxFlicker.flicker(titleText);
-					}
-					default:
-					{
-						FlxG.camera.fade(FlxColor.BLACK, 1, false, null, true);
-						FlxTween.tween(titleText, {alpha: 0}, 1);
-					}
-				}
+				if (titleText != null) titleText.animation.play('press');
+
 				FlxG.sound.play(Paths.sound('confirmMenu'), .7);
 				new FlxTimer().start(1, function(tmr:FlxTimer)
 				{
@@ -336,33 +335,37 @@ class TitleState extends MusicBeatState
 	override function beatHit()
 	{
 		super.beatHit();
-		if (logoBl != null) logoBl.animation.play('bump', true);
 
+		if (logoBl != null) logoBl.animation.play('bump', true);
 		if (canZoomCamera()) FlxG.camera.zoom += .045;
+	}
+	override function stepHit()
+	{
+		super.stepHit();
 		if (!closedState)
 		{
-			// sickBeats++;
-			for (i in sickBeats...curBeat)
+			// sickSteps++;
+			for (i in sickSteps...curStep)
 			{
 				switch (i + 1)
 				{
 					case 0:
 						createCoolText(['Pandemonium', 'the j', 'and CRASH'], -40);
-					case 3:
+					case 7:
 						addMoreText('present', -40);
 
-					case 4:
+					case 11:
 						deleteCoolText();
 
-					case 5:
+					case 16:
 						createCoolText(['A mod for'], -40);
-					case 7:
+					case 23:
 					{
 						if (awesomeLogo != null) awesomeLogo.visible = true;
 						addMoreText('Top 10 Awesome', -40);
 					}
 
-					case 8:
+					case 27:
 					{
 						if (awesomeLogo != null)
 						{
@@ -377,28 +380,29 @@ class TitleState extends MusicBeatState
 						deleteCoolText();
 					}
 
-					case 9:
+					case 32:
 						createCoolText(['Happy Birthday']);
-					case 11:
+					case 39:
 						addMoreText('Top 10 Awesome!');
 
-					case 12:
+					case 43:
 						deleteCoolText();
 
-					case 13:
+					case 48:
 						createCoolText(['Top 10 Awesome\'s']);
-					case 14:
+					case 57:
 						addMoreText('Birthday');
-					case 15:
+					case 59:
 						addMoreText('Bash');
 
-					case 16:
+					case 64:
 						skipIntro();
 				}
 			}
-			sickBeats = curBeat;
+			sickSteps = curStep;
 		}
 	}
+
 	function skipIntro():Void
 	{
 		if (!skippedIntro)

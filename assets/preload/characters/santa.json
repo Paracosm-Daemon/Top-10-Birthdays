@@ -13,8 +13,8 @@
 		},
 		{
 			"offsets": [
-				75,
-				55
+				80,
+				70
 			],
 			"loop": false,
 			"fps": 24,
@@ -35,8 +35,8 @@
 		},
 		{
 			"offsets": [
-				-58,
-				110
+				-59,
+				111
 			],
 			"loop": false,
 			"fps": 24,
@@ -57,10 +57,10 @@
 		}
 	],
 	"no_antialiasing": false,
-	"image": "k,lcharacters/santa",
+	"image": "characters/santa",
 	"position": [
-		-340,
-		50
+		-350,
+		30
 	],
 	"healthicon": "face",
 	"flip_x": false,

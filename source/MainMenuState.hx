@@ -189,9 +189,10 @@ class MainMenuState extends MusicBeatState
 								case 'story_mode':
 								{
 									trace('switch to the songv fart');
+									var formatted:String = Paths.formatToSongPath(PlayState.SONG_NAME);
 
-									PlayState.SONG = Song.loadFromJson('bash');
-									LoadingState.loadAndSwitchState(new PlayState());
+									PlayState.SONG = Song.loadFromJson(formatted, formatted); // lolzoolzolzlzolzozololzolzolz
+									LoadingState.loadAndSwitchState(new PlayState(), true);
 								}
 								case 'credits':
 									MusicBeatState.switchState(new CreditsState());
