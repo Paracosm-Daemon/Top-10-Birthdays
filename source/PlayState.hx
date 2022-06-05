@@ -3064,18 +3064,11 @@ class PlayState extends MusicBeatState
 	{
 		super.beatHit();
 
-		if (lastBeatHit >= curBeat)
-			return;
-		if (generatedMusic)
-		{
-			notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
-		}
+		if (lastBeatHit >= curBeat) return;
+		if (generatedMusic) notes.sort(FlxSort.byY, ClientPrefs.downScroll ? FlxSort.ASCENDING : FlxSort.DESCENDING);
 
-		if (SONG.notes[Math.floor(curStep / 16)] != null)
-		{
-			if (SONG.notes[Math.floor(curStep / 16)].changeBPM)
-				Conductor.changeBPM(SONG.notes[Math.floor(curStep / 16)].bpm);
-		}
+		var section:SwagSection = SONG.notes[Math.floor(curStep / 16)];
+		if (section != null && section.changeBPM) Conductor.changeBPM(section.bpm);
 
 		var zoomFunction:Array<Dynamic> = camZoomTypes[camZoomType];
 		if (zoomFunction != null && canZoomCamera() && zoomFunction[0])
