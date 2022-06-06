@@ -906,7 +906,7 @@ class PlayState extends MusicBeatState
 		var curAnim:FlxAnimation = char.animation.curAnim;
 		if (curAnim != null && (beat % char.danceEveryNumBeats) == 0)
 		{
-			if (!char.stunned && (curAnim.finished || !curAnim.name.startsWith("sing")))
+			if (!char.stunned && (curAnim.finished || !curAnim.name.startsWith("sing") || curAnim.name.endsWith("miss")))
 				char.dance();
 		}
 	}
@@ -938,9 +938,8 @@ class PlayState extends MusicBeatState
 		if (curAnim != null)
 		{
 			var animName = curAnim.name;
-			if (boyfriend.holdTimer > ((Conductor.stepCrochet / 1000) * boyfriend.singDuration)
-				&& (animName.startsWith("sing") && !animName.endsWith("miss")))
-				boyfriend.dance();
+			if (boyfriend.holdTimer > ((Conductor.stepCrochet / 1000) * boyfriend.singDuration) && animName.startsWith("sing") && !animName.endsWith("miss"))
+				boyfriend.dance(true);
 		}
 	}
 
