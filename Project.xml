@@ -40,8 +40,6 @@
 
 	<classpath name="source" />
 	<!-- PSYCH ENGINE CUSTOMIZATION -->
-	<define name="VIDEOS_ALLOWED" if="web || windows" unless="32bits"/>
-
 	<assets path="assets/preload" rename="assets" exclude="*.ogg" if="web"/>
 	<assets path="assets/preload" rename="assets" exclude="*.mp3"  unless="web"/>
 
@@ -49,9 +47,7 @@
 	<define name="PRELOAD_ALL" unless="web" />
 	<define name="NO_PRELOAD_ALL" unless="PRELOAD_ALL"/>
 
-	<library name="videos"        preload="true" />
 	<library name="songs"         preload="true" />
-
 	<section if="PRELOAD_ALL">
 		<library name="shared"        preload="true" />
 		<library name="birthday"      preload="true" />
@@ -62,9 +58,6 @@
 		<library name="birthday"      preload="false" />
 	</section>
 
-	<assets path="plugins/"             rename=''               if="VIDEOS_ALLOWED windows" />
-	<assets path="dlls/"                rename=''               if="VIDEOS_ALLOWED windows" />
-	<assets path="assets/videos"        library="videos"        if="VIDEOS_ALLOWED"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.ogg" if="web"/>
 	<assets path="assets/songs"         library="songs"         exclude="*.mp3" unless="web"/>
 	<assets path="assets/shared"        library="shared"        exclude="*.ogg" if="web"/>

@@ -52,7 +52,7 @@ class CreditsState extends MusicBeatState
 		[
 			'J',
 			'j',
-			'Composer of Bash and the Menu theme',
+			'Composer of Bash and the Menu theme\nAlso made the stage for Bash',
 			['https://twitter.com/Fwuffy_J', 'https://www.youtube.com/channel/UCUbzTC7u5sBT--ZR6zJ5m1A', 'https://www.roblox.com/users/3513131884/profile'],
 			'99FDC5'
 		],
@@ -60,7 +60,7 @@ class CreditsState extends MusicBeatState
 			'Crash',
 			iFuckingHateCrash[crashIcon][0],
 			'Artist/Animator',
-			['https://twitter.com/CR45H_SUS', 'https://gamebanana.com/members/2088706'],
+			['https://twitter.com/SHITTERED404', 'https://gamebanana.com/members/2088706'],
 			iFuckingHateCrash[crashIcon][1]
 		]
 	];

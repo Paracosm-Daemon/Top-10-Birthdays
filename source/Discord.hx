@@ -10,7 +10,7 @@ import discord_rpc.DiscordRpc;
 
 class DiscordClient
 {
-	private static var largeText:String = "Happy Birthday";
+	private static var largeText:String = "HAPPY BIRTHDAY TOP 10 AWESOME!!!";
 	public static var isInitialized:Bool = false;
 	#if (desktop && !neko && !debug)
 	private static var curPresence:DiscordPresenceOptions;
@@ -21,7 +21,7 @@ class DiscordClient
 		#if (desktop && !neko && !debug)
 		trace("Discord Client starting...");
 		DiscordRpc.start({
-			clientID: "863222024192262205",
+			clientID: "983194614263603272",
 			onReady: onReady,
 			onError: onError,
 			onDisconnected: onDisconnected
@@ -55,7 +55,7 @@ class DiscordClient
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
-			largeImageKey: 'icon',
+			largeImageKey: 'top10awesomelogo',
 			largeImageText: largeText
 		});
 		#end
@@ -92,7 +92,7 @@ class DiscordClient
 		curPresence = { // DiscordRpc.presence({
 			details: details,
 			state: state,
-			largeImageKey: 'icon',
+			largeImageKey: 'top10awesomelogo',
 			largeImageText: largeText,
 			smallImageKey: smallImageKey,
 			// Obtained times are in milliseconds so they are divided so Discord can use it
