@@ -1,66 +1,66 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"fps": 24,
+			"loop": false,
 			"anim": "idle",
-			"indices": [],
-			"name": "idle"
+			"fps": 24,
+			"name": "idle",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				80,
+				100,
 				70
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singLEFT",
-			"indices": [],
-			"name": "left"
+			"fps": 24,
+			"name": "left",
+			"indices": []
 		},
 		{
+			"loop": false,
 			"offsets": [
-				53,
+				71,
 				0
 			],
-			"loop": false,
-			"fps": 24,
 			"anim": "singDOWN",
-			"indices": [],
-			"name": "down"
+			"fps": 24,
+			"name": "down",
+			"indices": []
 		},
 		{
-			"offsets": [
-				-59,
-				111
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				-79,
+				148
+			],
 			"anim": "singUP",
-			"indices": [],
-			"name": "up"
+			"fps": 24,
+			"name": "up",
+			"indices": []
 		},
 		{
-			"offsets": [
-				-123,
-				75
-			],
 			"loop": false,
-			"fps": 24,
+			"offsets": [
+				-165,
+				100
+			],
 			"anim": "singRIGHT",
-			"indices": [],
-			"name": "right"
+			"fps": 24,
+			"name": "right",
+			"indices": []
 		}
 	],
 	"no_antialiasing": false,
 	"image": "characters/santa",
 	"position": [
-		-350,
-		30
+		-320,
+		-60
 	],
 	"healthicon": "face",
 	"flip_x": false,
@@ -70,9 +70,9 @@
 		161
 	],
 	"camera_position": [
-		30,
-		160
+		-90,
+		-180
 	],
 	"sing_duration": 4,
-	"scale": 0.6
+	"scale": 0.8
 }

@@ -184,12 +184,12 @@
 		-190,
 		-20
 	],
-	"healthicon": "top_10",
+	"healthicon": "evil_10",
 	"flip_x": false,
 	"healthbar_colors": [
-		161,
-		161,
-		161
+		0,
+		13,
+		255
 	],
 	"camera_position": [
 		-1800,

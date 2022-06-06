@@ -45,17 +45,6 @@ class VisualsUISubState extends BaseOptionsMenu
 		option.decimals = 2;
 
 		addOption(option);
-
-		var option:Option = new Option('Scroll Underlay', 'How transparent the underlay under your strumline should be.', 'scrollUnderlay', 'percent', 0);
-		option.scrollSpeed = 1.6;
-
-		option.minValue = 0;
-		option.maxValue = 1;
-
-		option.changeValue = .05;
-		option.decimals = 2;
-
-		addOption(option);
 		#if !mobile
 		var option:Option = new Option('FPS Counter', 'If unchecked, hides FPS Counter.', 'showFPS', 'bool', false);
 		addOption(option);

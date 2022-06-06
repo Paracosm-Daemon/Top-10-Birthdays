@@ -1,7 +1,7 @@
 {
 	"song": {
 		"player1": "top10",
-		"player2": null,
+		"player2": "eviltop10",
 		"notes": [
 			{
 				"lengthInSteps": 16,
@@ -2639,6 +2639,21 @@
 						107562.5,
 						2,
 						0
+					],
+					[
+						106437.5,
+						0,
+						0
+					],
+					[
+						106562.5,
+						3,
+						0
+					],
+					[
+						106812.5,
+						0,
+						0
 					]
 				],
 				"typeOfSection": 0,
@@ -2716,16 +2731,6 @@
 						125
 					],
 					[
-						109875,
-						0,
-						0
-					],
-					[
-						109000,
-						3,
-						0
-					],
-					[
 						109125,
 						3,
 						0
@@ -2733,6 +2738,11 @@
 					[
 						109250,
 						0,
+						0
+					],
+					[
+						109000,
+						1,
 						0
 					]
 				],
@@ -2749,11 +2759,6 @@
 						110000,
 						6,
 						1875
-					],
-					[
-						110000,
-						1,
-						0
 					],
 					[
 						110125,
@@ -2843,6 +2848,11 @@
 					[
 						111937.5,
 						2,
+						0
+					],
+					[
+						110000,
+						0,
 						0
 					]
 				],
@@ -22542,6 +22552,24 @@
 				"mustHitSection": true,
 				"changeBPM": false,
 				"bpm": 120
+			},
+			{
+				"sectionNotes": [],
+				"typeOfSection": 0,
+				"lengthInSteps": 16,
+				"altAnim": false,
+				"mustHitSection": true,
+				"changeBPM": false,
+				"bpm": 120
+			},
+			{
+				"lengthInSteps": 16,
+				"typeOfSection": 0,
+				"sectionNotes": [],
+				"altAnim": false,
+				"bpm": 120,
+				"changeBPM": false,
+				"mustHitSection": true
 			},
 			{
 				"sectionNotes": [],

@@ -119,11 +119,7 @@ class GameOverSubstate extends MusicBeatSubstate
 		var curAnim:FlxAnimation = boyfriend.animation.curAnim;
 		if (curAnim != null && curAnim.name == 'firstDeath')
 		{
-			var shitFartAssFrame:Int = switch (Paths.formatToSongPath(characterName))
-			{
-				default: 12;
-			}
-			if ((curAnim.curFrame >= shitFartAssFrame || curAnim.finished) && !isFollowingAlready)
+			if ((curAnim.curFrame >= 25 || curAnim.finished) && !isFollowingAlready)
 			{
 				FlxG.camera.follow(camFollowPos, LOCKON, 1);
 

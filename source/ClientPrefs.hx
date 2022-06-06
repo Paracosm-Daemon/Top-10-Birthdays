@@ -8,7 +8,6 @@ import flixel.util.FlxSave;
 class ClientPrefs
 {
 	public static var reducedMotion:Bool = false;
-	public static var scrollUnderlay:Float = 0; // WHY IS THIS NOT IN NATIVE PSYCH
 
 	public static var downScroll:Bool = false;
 	public static var middleScroll:Bool = false;
@@ -82,7 +81,7 @@ class ClientPrefs
 	];
 	public static var persistentData:Array<String> = [
 		'reducedMotion', 'downScroll', 'middleScroll', 'opponentStrums', 'flashing', 'globalAntialiasing', 'noteSplashes', 'lowQuality', 'camZooms', 'noteOffset',
-		'hideHud', 'ghostTapping', 'timeBarType', 'scoreZoom', 'noReset', 'healthBarAlpha', 'comboOffset', 'ratingOffset', 'controllerMode', 'hitsoundVolume', 'scrollUnderlay'
+		'hideHud', 'ghostTapping', 'timeBarType', 'scoreZoom', 'noReset', 'healthBarAlpha', 'comboOffset', 'ratingOffset', 'controllerMode', 'hitsoundVolume'
 	];
 	public static var persistentFunctions:Map<String, Dynamic> = [
 		'framerate' => function(data):Bool

@@ -47,7 +47,7 @@ class Song
 	public var stage:String;
 
 	public var player1:String = 'top10';
-	public var player2:String = 'test';
+	public var player2:String = 'eviltop10';
 
 	private static function onLoadJson(songJson:Dynamic) // Convert old charts to newest format
 	{

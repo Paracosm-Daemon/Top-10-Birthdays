@@ -162,7 +162,7 @@ class Note extends FlxSprite
 		isSustainNote = sustainNote;
 		this.inEditor = inEditor;
 
-		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + 50;
+		x += (ClientPrefs.middleScroll ? PlayState.STRUM_X_MIDDLESCROLL : PlayState.STRUM_X) + (swagWidth / 2);
 		// MAKE SURE ITS DEFINITELY OFF SCREEN?
 		y -= FlxG.height + frameHeight;
 		this.strumTime = strumTime;

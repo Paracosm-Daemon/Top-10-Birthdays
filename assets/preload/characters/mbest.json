@@ -1,59 +1,59 @@
 {
 	"animations": [
 		{
-			"loop": false,
 			"offsets": [
 				0,
 				0
 			],
-			"anim": "idle",
+			"loop": false,
 			"fps": 24,
-			"name": "MBEST_IDLE",
-			"indices": []
+			"anim": "idle",
+			"indices": [],
+			"name": "MBEST_IDLE"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				25,
 				4
 			],
-			"anim": "singLEFT",
+			"loop": false,
 			"fps": 24,
-			"name": "MBEST_LEFT",
-			"indices": []
+			"anim": "singLEFT",
+			"indices": [],
+			"name": "MBEST_LEFT"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				10,
 				0
 			],
-			"anim": "singDOWN",
+			"loop": false,
 			"fps": 24,
-			"name": "MBEST_DOWN",
-			"indices": []
+			"anim": "singDOWN",
+			"indices": [],
+			"name": "MBEST_DOWN"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-56,
 				46
 			],
-			"anim": "singUP",
+			"loop": false,
 			"fps": 24,
-			"name": "MBEST_UP",
-			"indices": []
+			"anim": "singUP",
+			"indices": [],
+			"name": "MBEST_UP"
 		},
 		{
-			"loop": false,
 			"offsets": [
 				-43,
 				8
 			],
-			"anim": "singRIGHT",
+			"loop": false,
 			"fps": 24,
-			"name": "MBEST_RIGHT",
-			"indices": []
+			"anim": "singRIGHT",
+			"indices": [],
+			"name": "MBEST_RIGHT"
 		}
 	],
 	"no_antialiasing": false,
@@ -70,8 +70,8 @@
 		167
 	],
 	"camera_position": [
-		-140,
-		80
+		240,
+		40
 	],
 	"sing_duration": 4,
 	"scale": 1.25

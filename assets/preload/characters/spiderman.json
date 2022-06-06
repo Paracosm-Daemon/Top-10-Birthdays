@@ -14,8 +14,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				15,
-				35
+				25,
+				55
 			],
 			"anim": "singLEFT",
 			"fps": 24,
@@ -36,8 +36,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				-16,
-				92
+				-26,
+				152
 			],
 			"anim": "singUP",
 			"fps": 24,
@@ -47,8 +47,8 @@
 		{
 			"loop": false,
 			"offsets": [
-				-44,
-				-31
+				-73,
+				-53
 			],
 			"anim": "singRIGHT",
 			"fps": 24,
@@ -59,8 +59,8 @@
 	"no_antialiasing": false,
 	"image": "characters/spiderman",
 	"position": [
-		-340,
-		-120
+		-320,
+		-280
 	],
 	"healthicon": "face",
 	"flip_x": false,
@@ -70,9 +70,9 @@
 		161
 	],
 	"camera_position": [
-		170,
-		500
+		300,
+		420
 	],
 	"sing_duration": 4,
-	"scale": 0.3
+	"scale": 0.5
 }
